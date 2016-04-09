@@ -10,14 +10,14 @@
 
 public class Cell {
 	// Attributes
-	private char name;
-	private boolean passable;
+	private char name;			// the "name" of the cell; letter or symbol to denote it on grid
+	private boolean passable;	// 
 	private boolean occupiable;
 	private boolean blockRange;
-	private int currentHP;
-	private int maxHP;
-	private int defense;
-	private int spirit;
+//	private int currentHP;
+//	private int maxHP;
+//	private int defense;
+//	private int spirit;
 	private int con;
 
 	// Constructors
@@ -26,12 +26,14 @@ public class Cell {
 	 * Dummy constructor to create a blank cell 
 	 */
 	public Cell() {
-		
+		// Set flags
+		this.passable = true;
+		this.occupiable = true;
+		this.blockRange = false;
 	}
 
 
 	// Methods
-	
 	
 	public char getName() {
 		return name;
@@ -62,7 +64,8 @@ public class Cell {
 		this.blockRange = blockRange;
 	}
 	
-
+	/* Commenting this out pending further discussion about setting up
+	 * the Cells.
 	public int getCurrentHP() {
 		return currentHP;
 	}
@@ -101,6 +104,7 @@ public class Cell {
 	public void setSpirit(int spirit) {
 		this.spirit = spirit;
 	}
+	*/
 
 	/**
 	 * Getter method to return the passability flag of the Cell.
@@ -109,6 +113,15 @@ public class Cell {
 	 */
 	public boolean getPassable() {
 		return this.passable;
+	}
+	
+	/**
+	 * Setter method that updates the passability flag of the Cell. 
+	 * 
+	 * @param passable - Boolean value. True for passable, false for impassable.
+	 */
+	public void setPassable(boolean passable) {
+		this.passable = passable;
 	}
 
 	/**
@@ -121,6 +134,17 @@ public class Cell {
 	}
 	
 	/**
+	 * Setter method to update the CON statistic of the Cell.
+	 * 
+	 * @param con - the CON statistic, an integer between 1-10
+	 */
+	public void setCon(int con) {
+		// NOTE: Will need to make sure that the value stays between
+		// range of 1-10
+		this.con = con;
+	}
+	
+	/**
 	 * The toString() method prints the current Cell as a String.
 	 * 
 	 * Currently it is just a dummy operation that prints a blank Cell
@@ -128,6 +152,9 @@ public class Cell {
 	 */
 	public String toString() {
 		String s = "{ }";
+		
+		// String s = "{" + this.getName() + "}";
+		
 		return s;
 	}
 }
