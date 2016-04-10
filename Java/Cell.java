@@ -10,10 +10,11 @@
 
 public class Cell {
 	// Attributes
-	private char name;			// the "name" of the cell; letter or symbol to denote it on grid
-	private boolean passable;	// 
+	private String name;				// 
+	private char identifier;			// letter or symbol to denote cell on grid
+	private boolean passable;			// 
 	private boolean occupiable;
-	private boolean blockRange;
+	private boolean blockProperty;
 //	private int currentHP;
 //	private int maxHP;
 //	private int defense;
@@ -29,39 +30,86 @@ public class Cell {
 		// Set flags
 		this.passable = true;
 		this.occupiable = true;
-		this.blockRange = false;
+		this.blockProperty = false;
 	}
 
 
 	// Methods
 	
-	public char getName() {
+	/**
+	 * Getter method that returns the name of the Cell for display to the user
+	 * through UI stuff.
+	 * 
+	 * @return the name of the Cell, a String
+	 */
+	public String getName() {
 		return name;
 	}
 
-
-	public void setName(char name) {
+	/** 
+	 * Setter method for updating the name of the Cell.
+	 * 
+	 * @param name - a String for updating the name of the Cell
+	 */
+	public void setName(String name) {
 		this.name = name;
 	}
 
 
+	/**
+	 * Getter method that returns the identifying letter/symbol of the Cell
+	 * 
+	 * @return the identifying letter/symbol of the Cell
+	 */
+	public char getID() {
+		return identifier;
+	}
+
+	/**
+	 * Setter method that updates the Cell's identifying letter or symbol.
+	 * 
+	 * @param ident - a char that represents the Cell
+	 */
+	public void setID(char ident) {
+		this.identifier = ident;
+	}
+
+	/**
+	 * Method that checks whether or not the Cell is occupiable
+	 * 
+	 * @return true if the Cell can be occupied, false otherwise
+	 */
 	public boolean isOccupiable() {
 		return occupiable;
 	}
 
-
+	/**
+	 * Setter method to update the occupiability flag
+	 * 
+	 * @param occupiable
+	 */
 	public void setOccupiable(boolean occupiable) {
 		this.occupiable = occupiable;
 	}
 
 
-	public boolean isBlockRange() {
-		return blockRange;
+	/**
+	 * Getter method to check the block property flag on the current Cell.
+	 * 
+	 * @return Boolean value. True if cell blocks ranged attacks, false otherwise
+	 */
+	public boolean getBlockProperty() {
+		return blockProperty;
 	}
 
-
-	public void setBlockRange(boolean blockRange) {
-		this.blockRange = blockRange;
+	/**
+	 * Setter method to set whether or not the current Cell can
+	 * block spells and ranged attacks.
+	 * 
+	 * @param blockProp Boolean value. True if cell blocks ranged attacks, false otherwise
+	 */
+	public void setBlockProperty(boolean blockProp) {
+		this.blockProperty = blockProp;
 	}
 	
 	/* Commenting this out pending further discussion about setting up
@@ -153,7 +201,7 @@ public class Cell {
 	public String toString() {
 		String s = "{ }";
 		
-		// String s = "{" + this.getName() + "}";
+		// String s = "{" + this.getID() + "}";
 		
 		return s;
 	}
