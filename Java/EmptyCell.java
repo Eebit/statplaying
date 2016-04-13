@@ -1,4 +1,4 @@
-public class EmptyCell implements ICell {
+public class EmptyCell extends Cell implements ICell {
 	// ATTRIBUTES
 	
 	// Descriptor strings.
@@ -20,8 +20,7 @@ public class EmptyCell implements ICell {
 	public boolean blockProperty;
 
 	// CONSTRUCTORS
-	public EmptyCell()
-	{
+	public EmptyCell() {
 		initialiseFlags();
 		initialiseBreakability();
 		createCell();
