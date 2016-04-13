@@ -8,7 +8,7 @@
 public class GridDisplay {
 	
 	private int xVal, yVal;
-	private Cell[][] grid;
+	private EmptyCell[][] grid;
 	
 	/**
 	 * Constructor that, if no x and y values are assigned, defaults to 3.
@@ -20,12 +20,12 @@ public class GridDisplay {
 		this.xVal = 3;
 		this.yVal = 3;
 		
-		this.grid = new Cell[yVal][xVal];
+		this.grid = new EmptyCell[yVal][xVal];
 		
 		// Nested for loops to initialize all elements of the array
 		for(int i = 0; i < this.yVal; i++) {
 			for(int j = 0; j < this.xVal; j++) {
-				this.grid[i][j] = new Cell();
+				this.grid[i][j] = new EmptyCell();
 			}
 		}
 	}
@@ -42,11 +42,11 @@ public class GridDisplay {
 		this.xVal = x;
 		this.yVal = y;
 		
-		this.grid = new Cell[yVal][xVal];
+		this.grid = new EmptyCell[yVal][xVal];
 		
 		for(int i = 0; i < this.yVal; i++) {
 			for(int j = 0; j < this.xVal; j++) {
-				this.grid[i][j] = new Cell();
+				this.grid[i][j] = new EmptyCell();
 			}
 		}
 	}
