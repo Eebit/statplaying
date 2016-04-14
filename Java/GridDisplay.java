@@ -63,9 +63,27 @@ public class GridDisplay {
 		
 		// we use < rather than <= so that we can make nice aesthetics and stuff
 		for(int v = 1; v < this.grid[0].length; v++) {
-			System.out.print(v + "---");
+			if(v < 9) {
+				System.out.print(v + "---");
+			}
+			if(v == 9) {
+				System.out.print(v + "--");
+			}
+			if(v >= 10) {
+				if((v % 10) == 0) {
+					System.out.print(v/10 + " 0"  + "-");
+				}
+				else {
+					System.out.print(v/10 + " " + (v%10) + "-");
+				}
+			}
 		}
-		System.out.print(this.grid[0].length + "-");
+		if(this.grid[0].length > 9) {
+			System.out.print(((this.grid[0].length) / 10) + " " + ((this.grid[0].length) % 10) + "-");
+		}
+		else {
+			System.out.print(this.grid[0].length + "-");
+		}
 	}
 	
 	/**
@@ -74,7 +92,7 @@ public class GridDisplay {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		GridDisplay g = new GridDisplay(6,4);
+		GridDisplay g = new GridDisplay(22,1);
 		
 		for(int c = 0; c < g.grid.length; c++) {
 			for(int a = 0; a < g.grid[c].length; a++) {
