@@ -1,0 +1,46 @@
+Statplay Engine:
+
+- X-Gauge: Stored as Integer with a max of 30
+- Calculate half levels with % operator 
+--- even is a full X-Level, odd is a half X-Level
+
+
+Example State (Recursion, 1.1):
+%%sssss%%
+%-DsssI-b
+%^--A--v%
+%^-----v%
+%^-----v%
+%^-----v%
+%^-----v%
+%^-YJ--v%
+b--TES--%
+
+Convention: 
+CAPS 		for units 
+lowercase 	for Cells 
+- 			for empty Cells
+{0-9}*		for Starting Zones
+
+
+Classes:
+GameState
+Grid
+Cell
+Inflictionary
+
+Methods:
+displayRange()
+
+
+Globally-Defined Object Behaviours:
+- Walls (%)
+- Starting Zones (#: {1-9}*)
+
+===
+
+Placement Phase:
+- Left Click to place (set isPlaced to TRUE)
+- Right Click to remove (set isPlaced to FALSE)
+- Left + Right Arrow Keys to cycle through available units to place
+- Variable to keep track of MAX_PARTY_SIZE
