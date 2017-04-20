@@ -5,6 +5,14 @@ Statplay Engine:
 --- even is a full X-Level, odd is a half X-Level
 
 
+getAdjacentCells
+- get current cell from 2d array grid
+- +/- 1 to current cell's x and y
+- get those cells and add to a list
+- return list
+- if array goes oob, do not add to list
+
+
 Example State (Recursion, 1.1):
 %%sssss%%
 %-DsssI-b
