@@ -1,8 +1,8 @@
 class Cell:
-    def __init__(self):
-        self.cellName = "Empty Cell"
-        self.identifier = " "
-        self.desc = ""
+    def __init__(self, name, id, desc):
+        self.cellName = name
+        self.identifier = id
+        self.desc = desc
     
     def __str__(self):
         return self.identifier
@@ -35,8 +35,11 @@ class Grid:
         for row in range(height):
             rowList = []
             for col in range(width):
-                rowList.append(Cell())
+                rowList.append(Cell("Empty Cell", " ", ""))
             self.grid.append(rowList)
+        
+        self.add_cell(Cell("lol", "l", ""), (2,4))
+        #self.grid[2][4] = Cell("lol", "l", "")
     
     def __str__(self):
         out = []
@@ -54,3 +57,12 @@ class Grid:
         #out = [[str(self.grid[x][y]) for x in range(self.width)] for y in range(self.height)]
         #out.reverse()
         return '\n'.join([''.join(x) for x in out])
+    
+    
+    """
+    Method that takes a Cell and adds it to the specified location 
+    (as a tuple; (row,col)) on the Grid.
+    """
+    def add_cell(self, cell, location):
+        self.grid[location[0]][location[1]] = cell
+    
