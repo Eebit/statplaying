@@ -38,7 +38,7 @@ class Grid:
                 rowList.append(Cell("Empty Cell", " ", ""))
             self.grid.append(rowList)
         
-        self.add_cell(Cell("lol", "l", ""), (2,4))
+        #self.add_cell(Cell("lol", "l", ""), (2,4))
         #self.grid[2][4] = Cell("lol", "l", "")
     
     def __str__(self):

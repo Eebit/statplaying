@@ -11,7 +11,7 @@
         "passable": "A Boolean value for passability",
         "occupiable": "A Boolean value for occupiability",
         "destructable": "A Boolean value for whether this Cell can be destroyed",
-        "block-range": "A Boolean value for the Block Property, i.e. can Ranged attacks go through this Cell",
+        "block-ranged": "A Boolean value for the Block Property, i.e. can Ranged attacks go through this Cell",
         
         "has-stats": "A Boolean value determining whether or not we care about stat values for this Cell",
         

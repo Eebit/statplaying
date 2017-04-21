@@ -1,0 +1,189 @@
+{
+	"cellformat": {
+        "cell-name": "The name of the Cell, e.g. Empty Cell, Wall Cell",
+        "cell-id": "The identifier of the Cell for display on the Grid",
+        "color": "The color of the Cell's identifier as a hexadecimal value",
+        "classification": "Unit, Object, Empty...",
+        "alignment": "The team alignment of this Cell. Integer...?",
+        
+        "exists": "A Boolean value for the Cell existing in the first place!",
+        
+        "passable": "A Boolean value for passability",
+        "occupiable": "A Boolean value for occupiability",
+        "destructable": "A Boolean value for whether this Cell can be destroyed",
+        "block-ranged": "A Boolean value for the Block Property, i.e. can Ranged attacks go through this Cell",
+        
+        "has-stats": "A Boolean value determining whether or not we care about stat values for this Cell",
+        
+        "current-health": "",
+        "max-health": "",
+        "current-mana": "",
+        "max-mana": "",
+        "attack": "",
+        "defense": "",
+        "intelligence": "",
+        "spirit": "",
+        "critical": "",
+        "evasion": "",
+        "movement": "",
+        "x-gauge": "",
+        "constitution": ""
+	},
+    "global-cells": [
+        {
+            "cell-name": "Empty Cell",
+            "cell-id": " ",
+            "color": "",
+            "classification": "Empty",
+            "alignment": "",
+            
+            "exists": true,
+            
+            "passable": true,
+            "occupiable": true,
+            "destructable": false,
+            "block-ranged": false,
+            
+            "has-stats": false
+        },
+        {
+            "cell-name": "Nonexistent Cell",
+            "cell-id": " ",
+            "color": "",
+            "classification": "Empty",
+            "alignment": "",
+            
+            "exists": false,
+            
+            "passable": false,
+            "occupiable": false,
+            "destructable": false,
+            "block-ranged": false,
+            
+            "has-stats": false
+        },
+        {
+            "cell-name": "Wall Cell",
+            "cell-id": "w",
+            "color": "#D3D3D3",
+            "classification": "Object",
+            "alignment": "",
+            
+            "exists": true,
+            
+            "passable": false,
+            "occupiable": false,
+            "destructable": true,
+            "block-ranged": false,
+            
+            "has-stats": true,
+            
+            "current-health": 50,
+            "max-health": 50,
+            "current-mana": 0,
+            "max-mana": 0,
+            "attack": 0,
+            "defense": 32,
+            "intelligence": 0,
+            "spirit": 26,
+            "critical": 0,
+            "evasion": 0,
+            "movement": 0,
+            "x-gauge": 0,
+            "constitution": 7
+        },
+        {
+            "cell-name": "Conveyor Switch",
+            "cell-id": "b",
+            "color": "#B22222",
+            "classification": "Object",
+            "alignment": "",
+            
+            "exists": true,
+            
+            "passable": false,
+            "occupiable": false,
+            "destructable": true,
+            "block-ranged": false,
+            
+            "has-stats": true,
+            
+            "current-health": 25,
+            "max-health": 25,
+            "current-mana": 0,
+            "max-mana": 0,
+            "attack": 0,
+            "defense": 10,
+            "intelligence": 0,
+            "spirit": 8,
+            "critical": 0,
+            "evasion": 0,
+            "movement": 0,
+            "x-gauge": 0,
+            "constitution": 4
+        },
+        {
+            "cell-name": "Conveyor Switch (Upwards)",
+            "cell-id": "^",
+            "color": "",
+            "classification": "Object",
+            "alignment": "",
+            
+            "exists": true,
+            
+            "passable": true,
+            "occupiable": true,
+            "destructable": false,
+            "block-ranged": false,
+            
+            "has-stats": false
+        },
+        {
+            "cell-name": "Conveyor Switch (Downwards)",
+            "cell-id": "v",
+            "color": "",
+            "classification": "Object",
+            "alignment": "",
+            
+            "exists": true,
+            
+            "passable": true,
+            "occupiable": true,
+            "destructable": false,
+            "block-ranged": false,
+            
+            "has-stats": false
+        },
+        {
+            "cell-name": "Screen Cell",
+            "cell-id": "s",
+            "color": "",
+            "classification": "Object",
+            "alignment": "",
+            
+            "exists": true,
+            
+            "passable": false,
+            "occupiable": false,
+            "destructable": true,
+            "block-ranged": true,
+            
+            "has-stats": true,
+            
+            "current-health": 40,
+            "max-health": 40,
+            "current-mana": 0,
+            "max-mana": 0,
+            "attack": 0,
+            "defense": 15,
+            "intelligence": 0,
+            "spirit": 12,
+            "critical": 0,
+            "evasion": 0,
+            "movement": 0,
+            "x-gauge": 0,
+            "constitution": 6
+        },
+        null
+    ]
+}
