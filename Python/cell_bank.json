@@ -3,8 +3,8 @@
         "cell-name": "The name of the Cell, e.g. Empty Cell, Wall Cell",
         "cell-id": "The identifier of the Cell for display on the Grid",
         "color": "The color of the Cell's identifier as a hexadecimal value",
-        "classification": "Unit, Object, Empty...",
-        "alignment": "The team alignment of this Cell. Integer...?",
+        "classification": "Integer. 0 (Empty Cells), 1 (Object Cells), 2 (Units)",
+        "alignment": "The team alignment of this Cell. Integer. 1-9 for team-alignment, 0 for environmental",
         
         "exists": "A Boolean value for the Cell existing in the first place!",
         
@@ -13,28 +13,31 @@
         "destructable": "A Boolean value for whether this Cell can be destroyed",
         "block-ranged": "A Boolean value for the Block Property, i.e. can Ranged attacks go through this Cell",
         
+        "is-occupied": "A Boolean value indicating whether or not this Cell is occupied",
+        
         "has-stats": "A Boolean value determining whether or not we care about stat values for this Cell",
         
-        "current-health": "",
-        "max-health": "",
-        "current-mana": "",
-        "max-mana": "",
-        "attack": "",
-        "defense": "",
-        "intelligence": "",
-        "spirit": "",
-        "critical": "",
-        "evasion": "",
-        "movement": "",
-        "x-gauge": "",
-        "constitution": ""
+        "current-health": "Integer representation of the Cell's current HP",
+        "max-health": "Integer representation of the Cell's max HP",
+        "current-mana": "Integer representation of the Cell's current MP",
+        "max-mana": "Integer representation of the Cell's max MP",
+        "attack": "Integer representation of the Cell's Atk stat",
+        "defense": "Integer representation of the Cell's Def stat",
+        "intelligence": "Integer representation of the Cell's Int stat",
+        "spirit": "Integer representation of the Cell's Spr stat",
+        "critical": "Integer representation of the Cell's Critical percentage",
+        "evasion": "Integer representation of the Cell's Evasion percentage",
+        "guard": "Integer representation of the Cell's Guard percentage (used mainly for Shields -- will generally be 0)",
+        "movement": "Integer representation of the Cell's Movement stat",
+        "x-gauge": "Integer representation of the Cell's current number of excess levels",
+        "constitution": "Integer representation of the Cell's Con stat. Will be invisible but used for knockback damage."
 	},
     "global-cells": [
         {
             "cell-name": "Empty Cell",
             "cell-id": " ",
             "color": "",
-            "classification": "Empty",
+            "classification": 0,
             "alignment": "",
             
             "exists": true,
@@ -50,7 +53,7 @@
             "cell-name": "Nonexistent Cell",
             "cell-id": " ",
             "color": "",
-            "classification": "Empty",
+            "classification": 0,
             "alignment": "",
             
             "exists": false,
@@ -66,7 +69,7 @@
             "cell-name": "Wall Cell",
             "cell-id": "w",
             "color": "#D3D3D3",
-            "classification": "Object",
+            "classification": 1,
             "alignment": "",
             
             "exists": true,
@@ -96,7 +99,7 @@
             "cell-name": "Conveyor Switch",
             "cell-id": "b",
             "color": "#B22222",
-            "classification": "Object",
+            "classification": 1,
             "alignment": "",
             
             "exists": true,
@@ -123,10 +126,10 @@
             "constitution": 4
         },
         {
-            "cell-name": "Conveyor Switch (Upwards)",
+            "cell-name": "Conveyor Belt (Upwards)",
             "cell-id": "^",
             "color": "",
-            "classification": "Object",
+            "classification": 1,
             "alignment": "",
             
             "exists": true,
@@ -139,10 +142,10 @@
             "has-stats": false
         },
         {
-            "cell-name": "Conveyor Switch (Downwards)",
+            "cell-name": "Conveyor Belt (Downwards)",
             "cell-id": "v",
             "color": "",
-            "classification": "Object",
+            "classification": 1,
             "alignment": "",
             
             "exists": true,
@@ -158,7 +161,7 @@
             "cell-name": "Screen Cell",
             "cell-id": "s",
             "color": "",
-            "classification": "Object",
+            "classification": 1,
             "alignment": "",
             
             "exists": true,

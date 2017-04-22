@@ -1,0 +1,20 @@
+{
+	"askillformat": {
+		"skill-name": "The name of the A-Skill.",
+		"description": "The flavour text of the A-Skill, if applicable.",
+		"hit-count": "The number of hits that this A-Skill causes.",
+		"damage": "The Damage (or Healing) multiplier. Negative for Healing, positive for Damage.",
+		"damage-stat": "Atk / Def / Int / Spr / HP / MP",
+		"damage-type": "Normal, Piercing, Destruct, etc.",
+		"status-effect": "If a Status Effect is applied to the target during this A-Skill, that Status Effect is here.",
+		"modifier": "The Chance Modifier for the Status Effect roll. Mod. 0 by default.",
+		"cast-time": "The number of Turns required for Cast Time, if applicable.",
+		"cast-type": "The type of Cast Time (i.e. Charge, Normal, etc).",
+		"accuracy": "The Accuracy.",
+		"variance": "The Variance roll, if applicable.",
+		"range": "The integer value of the number of Cells this A-Skill has as a range.",
+		"element": "The Element effect of the A-Skill",
+		"chain": "",
+		"mp-cost": "How much MP the A-Skill costs to use."
+	}
+}

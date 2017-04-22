@@ -1,0 +1,93 @@
+"unit-info": {
+    "gender": "",
+    "level": "",
+    "profession": [
+        "name": "",
+        "flavor": "", 
+        "ba-type": "" 
+    ],
+
+    "weapon": [
+        "type": "", 
+        "name": "", 
+        "flavor": "", 
+        "range": "",
+        "stats": [
+            "health": "",
+            "mana": "",
+            "attack": "",
+            "defense": "",
+            "intelligence": "",
+            "spirit": "",
+            "critical": "",
+            "evasion": "",
+            "movement": ""
+        ]
+    ],
+    "second": [ // shield, dual wield
+        "type": "", 
+        "name": "", 
+        "flavor": "", 
+        "range": "",
+        "stats": [
+            "health": "",
+            "mana": "",
+            "attack": "",
+            "defense": "",
+            "intelligence": "",
+            "spirit": "",
+            "critical": "",
+            "evasion": "",
+            "movement": ""
+        ]
+    ],
+    "armor": [
+        "type": "", 
+        "name": "", 
+        "flavor": "", 
+        "stats": [
+            "health": "",
+            "mana": "",
+            "attack": "",
+            "defense": "",
+            "intelligence": "",
+            "spirit": "",
+            "critical": "",
+            "evasion": "",
+            "movement": ""
+        ]
+    ],
+    "accessory": [ // potentially have to have an array of accessories, since more slots are acquired on promotion
+        "type": "", 
+        "name": "", 
+        "flavor": "", 
+        "stats": [
+            "health": "",
+            "mana": "",
+            "attack": "",
+            "defense": "",
+            "intelligence": "",
+            "spirit": "",
+            "critical": "",
+            "evasion": "",
+            "movement": ""
+        ]
+    ] 
+
+    "a-ability": { // potentially have to have an array of a-abilities, since more slots are acquired on promotion
+        "name": "",
+        
+        "a-skills": [
+            1 // REFER TO A-SKILL FORMAT
+            2
+            ...
+        ]
+    },
+
+    "reaction": "",
+    "support": "",
+    "burst": "",
+
+    "trigger": "",
+    "ability": ""
+}

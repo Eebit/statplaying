@@ -16,6 +16,7 @@ class Cell:
         #self.cellName = name
         #self.identifier = id
         #self.desc = desc
+        
     
     def __str__(self):
         return self.properties["cell-id"]
