@@ -1,34 +1,46 @@
-Statplay Engine:
+===============================================
+S T A T P L A Y   E N G I N E
+===============================================
+
+This is the general informational document, I suppose. My (Eebit's) random musings on how to implement various things will go here.
+
+===
 
 - X-Gauge: Stored as Integer with a max of 30
 - Calculate half levels with % operator 
 --- even is a full X-Level, odd is a half X-Level
 
 
-getAdjacentCells
-- get current cell from 2d array grid
-- +/- 1 to current cell's x and y
-- get those cells and add to a list
-- return list
-- if array goes oob, do not add to list
+For CellBank:
+    - "classification": 0 for Empty Cells, 1 for Object Cells, 2 for Unit Cells.
+    - "has-stats": is how we decide whether stats get displayed during "display information" (more later)
+    - perhaps color and id fields can be concatenated for determining different cells, in the event that more than one cell uses the same identifier
 
+GameState:
+    - Contains: 
+        - a grid, 
+        - the current phase (double; (<turn number>, <<team id>'s phase>)),
+        - the action stack (for reversing / undoing movements and actions)?,
+        - victory state,
+        - defeat state,
+    -
 
 Example State (Recursion, 1.1):
-%%sssss%%
-%-DsssI-b
-%^--A--v%
-%^-----v%
-%^-----v%
-%^-----v%
-%^-----v%
-%^-YJ--v%
-b--TES--%
+wwsssssww
+w-DsssI-b
+w^--A--vw
+w^-----vw
+w^-----vw
+w^-----vw
+w^-----vw
+w^-YJ--vw
+b--TES--w
 
 Convention: 
 CAPS 		for units 
 lowercase 	for Cells 
 - 			for empty Cells
-{0-9}*		for Starting Zones
+{1-9}*		for Starting Zones
 
 
 Classes:
@@ -37,13 +49,22 @@ Grid
 Cell
 Inflictionary
 
-Methods:
-displayRange()
-
 
 Globally-Defined Object Behaviours:
-- Walls (%)
+- Walls (w)
 - Starting Zones (#: {1-9}*)
+
+===
+
+Methods:
+displayRange() // may only be needed when GUI version is created?
+    -
+getAdjacentCells()
+    - get current cell from 2d array grid
+    - +/- 1 to current cell's x and y
+    - get those cells and add to a list
+    - return list
+    - if array goes oob, do not add to list
 
 ===
 
@@ -52,3 +73,68 @@ Placement Phase:
 - Right Click to remove (set isPlaced to FALSE)
 - Left + Right Arrow Keys to cycle through available units to place
 - Variable to keep track of MAX_PARTY_SIZE
+
+===
+
+(Store units + positions as a dict?)
+
+{
+    "team-id": 1,
+    
+    units: [
+        "Y": "H4",
+        "J": "H5",
+        "T": "I4",
+        "E": "I5",
+        "S": "I6"
+    ]
+}
+
+* Need to colour console output
+* Numbers appear in placement phase (Phase 0) only
+** Turn into Empty Cells after Phase 0
+
+wwsssssww
+w-DsssI-b
+w^--A--vw
+w^-----vw
+w^-----vw
+w^-----vw
+w^-----vw
+w^-YJ--vw
+b--TES--w
+
+>Select a unit's identifier, or type "end" to complete your phase
+    // check if cell's / unit's alignment == currentphase[team]
+    // if true, return display information and go to available actions
+    // if false, return display information and go to "select unit's identifier..."
+
+
+user input> Y
+    // get input char
+    // look up position
+    // decode position into tuple
+    // print(cell-name + " ({" + cell-id + "}) selected")
+    // print line break
+    // display information based on type of cell -- unit, object, empty...
+
+>Yume ({Y}) selected
+
+Yume (Drive Engineer) [status effect list]
+HP:         25/25
+MP:         15/15
+Atk:        5
+Def:        4
+Int:        2
+Spr:        3
+Critical:   5%
+Evasion:    3%
+Movement:   3 Cells
+X-Gauge:    0
+
+    MOVE    (M)
+    ACT     (A)
+    WAIT    (W)
+    CANCEL  (C)
+
+user input> _
