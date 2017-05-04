@@ -36,9 +36,9 @@
         {
             "cell-name": "Empty Cell",
             "cell-id": " ",
-            "color": "",
+            "color": "#000000",
             "classification": 0,
-            "alignment": "",
+            "alignment": 0,
             
             "exists": true,
             
@@ -52,9 +52,9 @@
         {
             "cell-name": "Nonexistent Cell",
             "cell-id": " ",
-            "color": "",
+            "color": "#FFFFFF",
             "classification": 0,
-            "alignment": "",
+            "alignment": 0,
             
             "exists": false,
             
@@ -70,7 +70,7 @@
             "cell-id": "w",
             "color": "#D3D3D3",
             "classification": 1,
-            "alignment": "",
+            "alignment": 0,
             
             "exists": true,
             
@@ -100,7 +100,7 @@
             "cell-id": "b",
             "color": "#B22222",
             "classification": 1,
-            "alignment": "",
+            "alignment": 0,
             
             "exists": true,
             
@@ -130,7 +130,7 @@
             "cell-id": "^",
             "color": "",
             "classification": 1,
-            "alignment": "",
+            "alignment": 0,
             
             "exists": true,
             
@@ -146,7 +146,7 @@
             "cell-id": "v",
             "color": "",
             "classification": 1,
-            "alignment": "",
+            "alignment": 0,
             
             "exists": true,
             
@@ -162,7 +162,7 @@
             "cell-id": "s",
             "color": "",
             "classification": 1,
-            "alignment": "",
+            "alignment": 0,
             
             "exists": true,
             
