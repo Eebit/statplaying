@@ -14,6 +14,33 @@ def loadUnits(filepath):
     except IOError as e:
         print("Cannot open " + filepath)
 
+"""
+Method that takes an input string in the form of our "grid notation"
+and converts it from that notation into a double.
+
+For example, given I5, the method will return (8, 4)
+"""
+def formatInputCoords(input):
+    inputAsList = list(input)
+    
+    if(len(inputAsList) != 2):
+        print("try again")
+    elif(not inputAsList[0].isalpha()):
+        print("not char")
+    elif(not inputAsList[1].isdigit()):
+        print("not num")
+    else:
+        if(inputAsList[0].isupper()):
+            row = ord(inputAsList[0]) - 65
+        else:
+            row = ord(inputAsList[0]) - 97
+                    
+        col = int(varList[1]) - 1
+                    
+        pos = (row, col)
+        return pos
+    
+
 class GameState:
     def __init__(self, grid):
         self.grid = grid
@@ -68,23 +95,9 @@ if __name__ == "__main__":
         
         varList = list(var)
         
-        if(len(varList) != 2):
-            print("try again")
-        elif(not varList[0].isalpha()):
-            print("not char")
-        elif(not varList[1].isdigit()):
-            print("not num")
-        else:
+        
+            pos = formatInputCoords(var)
             
-            # snippet to convert from our grid notation (i.e. I5) to a double, e.g. (8, 4)
-            if(varList[0].isupper()):
-                row = ord(varList[0]) - 65
-            else:
-                row = ord(varList[0]) - 97
-            
-            col = ord(varList[1]) - 49
-            
-            pos = (row, col)
             print(pos)
             break
     
