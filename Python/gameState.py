@@ -31,11 +31,11 @@ def formatInputCoords(input):
         print("not num")
     else:
         if(inputAsList[0].isupper()):
-            row = ord(inputAsList[0]) - 65
+            row = ord(inputAsList[0]) - 65 # convert from ASCII capital letter char to int
         else:
-            row = ord(inputAsList[0]) - 97
+            row = ord(inputAsList[0]) - 97 # convert from ASCII lowercase letter char to int
                     
-        col = int(varList[1]) - 1
+        col = int(inputAsList[1]) - 1 # subtract 1 to account for 0 being the first column internally, but 1 externally
                     
         pos = (row, col)
         return pos
@@ -66,7 +66,28 @@ class GameState:
             self.phase = 1
         else:
             self.phase = self.phase + 1
+    
+    def placementPhase(self, team):
+        for i, unit in enumerate(team):
+            print(i)
+            print(unit)
+            while True:
+                var = input("Enter Cell position for " + team[i].properties["cell-name"] + ": ")
+                
+                pos = formatInputCoords(var)
+                print(pos)
+                
+                if(pos != None):
+                    self.placeUnit(team[0], pos)
+                    break
             
+    
+    """
+    Method that places the unit on the grid during the placement phase.
+    
+    Takes the unit to be placed and the position for the unit to be placed at
+    as parameters.
+    """
     def placeUnit(self, unit, pos):
         row, col = pos[0], pos[1]
         
@@ -89,19 +110,10 @@ if __name__ == "__main__":
     gs = GameState(newGrid)
     print(gs)
     
+    gs.placementPhase(gs.team1)
     
-    while True:
-        var = input("Enter Cell position for " + gs.team1[0].properties["cell-name"] + ": ")
-        
-        varList = list(var)
-        
-        
-            pos = formatInputCoords(var)
-            
-            print(pos)
-            break
     
     print([Cell for Cell in gs.team1])
-    gs.placeUnit(gs.team1[0], pos)
+    
     print(gs)
     
