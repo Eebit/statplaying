@@ -50,6 +50,9 @@ class Cell:
             
     def __str__(self):
         return self.properties["cell-id"]
+        
+    def __repr__(self):
+        return str(self)
 
 
 class Grid:
@@ -106,6 +109,14 @@ class Grid:
                     # if we hit the "null" in the array, break the loop; no Cell defined
                     if not data["global-cells"][x]:
                         break
+                    
+                    # !!!! TEMPORARY !!!!
+                    # handler for the nonexistent cell
+                    if(grid_data[list][cell] == " "):
+                        self.add_cell(Cell(data["global-cells"][1]), (list,cell))
+                        found = True
+                        break
+                    # !!!! End of Temporary !!!!
                     
                     # if the grid_data char is the empty cell, we modify its symbol so that we can parse it properly
                     if(grid_data[list][cell] == "-"):
