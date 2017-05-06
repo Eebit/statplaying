@@ -16,21 +16,22 @@
         "is-occupied": "A Boolean value indicating whether or not this Cell is occupied",
         
         "has-stats": "A Boolean value determining whether or not we care about stat values for this Cell",
-        
-        "current-health": "Integer representation of the Cell's current HP",
-        "max-health": "Integer representation of the Cell's max HP",
-        "current-mana": "Integer representation of the Cell's current MP",
-        "max-mana": "Integer representation of the Cell's max MP",
-        "attack": "Integer representation of the Cell's Atk stat",
-        "defense": "Integer representation of the Cell's Def stat",
-        "intelligence": "Integer representation of the Cell's Int stat",
-        "spirit": "Integer representation of the Cell's Spr stat",
-        "critical": "Integer representation of the Cell's Critical percentage",
-        "evasion": "Integer representation of the Cell's Evasion percentage",
-        "guard": "Integer representation of the Cell's Guard percentage (used mainly for Shields -- will generally be 0)",
-        "movement": "Integer representation of the Cell's Movement stat",
-        "x-gauge": "Integer representation of the Cell's current number of excess levels",
-        "constitution": "Integer representation of the Cell's Con stat. Will be invisible but used for knockback damage."
+        "stats": {
+            "current-health": "Integer representation of the Cell's current HP",
+            "max-health": "Integer representation of the Cell's max HP",
+            "current-mana": "Integer representation of the Cell's current MP",
+            "max-mana": "Integer representation of the Cell's max MP",
+            "attack": "Integer representation of the Cell's Atk stat",
+            "defense": "Integer representation of the Cell's Def stat",
+            "intelligence": "Integer representation of the Cell's Int stat",
+            "spirit": "Integer representation of the Cell's Spr stat",
+            "critical": "Integer representation of the Cell's Critical percentage",
+            "evasion": "Integer representation of the Cell's Evasion percentage",
+            "guard": "Integer representation of the Cell's Guard percentage (used mainly for Shields -- will generally be 0)",
+            "movement": "Integer representation of the Cell's Movement stat",
+            "x-gauge": "Integer representation of the Cell's current number of excess levels",
+            "constitution": "Integer representation of the Cell's Con stat. Will be invisible but used for knockback damage."
+        }
 	},
     "global-cells": [
         {
@@ -80,20 +81,21 @@
             "block-ranged": false,
             
             "has-stats": true,
-            
-            "current-health": 50,
-            "max-health": 50,
-            "current-mana": 0,
-            "max-mana": 0,
-            "attack": 0,
-            "defense": 32,
-            "intelligence": 0,
-            "spirit": 26,
-            "critical": 0,
-            "evasion": 0,
-            "movement": 0,
-            "x-gauge": 0,
-            "constitution": 7
+            "stats": {
+                "current-health": 50,
+                "max-health": 50,
+                "current-mana": 0,
+                "max-mana": 0,
+                "attack": 0,
+                "defense": 32,
+                "intelligence": 0,
+                "spirit": 26,
+                "critical": 0,
+                "evasion": 0,
+                "movement": 0,
+                "x-gauge": 0,
+                "constitution": 7
+            }
         },
         {
             "cell-name": "Conveyor Switch",
@@ -110,20 +112,21 @@
             "block-ranged": false,
             
             "has-stats": true,
-            
-            "current-health": 25,
-            "max-health": 25,
-            "current-mana": 0,
-            "max-mana": 0,
-            "attack": 0,
-            "defense": 10,
-            "intelligence": 0,
-            "spirit": 8,
-            "critical": 0,
-            "evasion": 0,
-            "movement": 0,
-            "x-gauge": 0,
-            "constitution": 4
+                "stats": {
+                "current-health": 25,
+                "max-health": 25,
+                "current-mana": 0,
+                "max-mana": 0,
+                "attack": 0,
+                "defense": 10,
+                "intelligence": 0,
+                "spirit": 8,
+                "critical": 0,
+                "evasion": 0,
+                "movement": 0,
+                "x-gauge": 0,
+                "constitution": 4
+            }
         },
         {
             "cell-name": "Conveyor Belt (Upwards)",
@@ -172,20 +175,39 @@
             "block-ranged": true,
             
             "has-stats": true,
+            "stats": {
+                "current-health": 40,
+                "max-health": 40,
+                "current-mana": 0,
+                "max-mana": 0,
+                "attack": 0,
+                "defense": 15,
+                "intelligence": 0,
+                "spirit": 12,
+                "critical": 0,
+                "evasion": 0,
+                "movement": 0,
+                "x-gauge": 0,
+                "constitution": 6
+            }
+        },
+        {
+            "cell-name": "Starting Zone",
+            "cell-id": "1",
+            "color": "#0000ff",
+            "classification": 0,
+            "alignment": 1,
             
-            "current-health": 40,
-            "max-health": 40,
-            "current-mana": 0,
-            "max-mana": 0,
-            "attack": 0,
-            "defense": 15,
-            "intelligence": 0,
-            "spirit": 12,
-            "critical": 0,
-            "evasion": 0,
-            "movement": 0,
-            "x-gauge": 0,
-            "constitution": 6
+            "exists": true,
+            
+            "passable": true,
+            "occupiable": true,
+            "destructable": false,
+            "block-ranged": false,
+            
+            "is-occupied": false,
+            
+            "has-stats": false
         },
         null
     ]
