@@ -55,10 +55,10 @@ class GameState:
     
     def __str__(self):
         turnInfo = (str(self.turn), str(self.phase))
-        turnInfo = ('.').join(turnInfo)
+        turnInfo = ('\n').join(turnInfo)
     
-        state = (turnInfo, "", str(self.grid))
-        return ('\n').join(state)
+        state = (turnInfo, str(self.grid), str(self.num_teams), str(self.team1), str(self.team2))
+        return ('\n;\n').join(state)
     
     def incrementPhase(self):
         if(self.phase + 1 % self.num_teams == 0):
@@ -90,6 +90,8 @@ class GameState:
             for colInd, col in enumerate(row):
                 if(team == self.team1) and (str(self.grid.grid[rowInd][colInd]) == "1"):
                     print((rowInd, colInd))
+        
+        self.incrementPhase()
     
     """
     Method that places the unit on the grid during the placement phase.
