@@ -102,6 +102,13 @@ class GameState:
     def placeUnit(self, unit, pos):
         row, col = pos[0], pos[1]
         
+        if(row < 0) or (row >= self.grid.height):
+            print("Out of Bounds")
+            return False
+        if(col < 0) or (col >= self.grid.width):
+            print("Out of Bounds")
+            return False
+        
         # Checks:
         # - Is this the placement phase (i.e. Turn == 0)
         # - Can the Cell be occupied? TODO: Maybe check instead if it IS occupied?
