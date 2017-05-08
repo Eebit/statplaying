@@ -8,14 +8,14 @@ def loadUnits(filepath):
             
         unitList = []
         for i in data["team"]: # :^)
-            unitList.append(Cell(i))
+            unitList.append(Unit(i))
         
         return unitList
     except IOError as e:
         print("Cannot open " + filepath)
 
 """
-Method that takes an input string in the form of our "grid notation"
+Utility method that takes an input string in the form of our "grid notation"
 and converts it from that notation into a double.
 
 For example, given I5, the method will return (8, 4)
@@ -71,30 +71,52 @@ class GameState:
         for i, unit in enumerate(team):
             print(i)
             print(unit)
-            while True:
-                var = input("Enter Cell position for " + team[i].properties["cell-name"] + ": ")
+            
+            placed = False
+            
+            while (placed == False):
+                coord = input("Enter Cell position for " + team[i].properties["cell-name"] + ": ")
                 
-                pos = formatInputCoords(var)
+                pos = formatInputCoords(coord)
                 print(pos)
                 
                 if(pos != None):
-                    self.placeUnit(team[0], pos)
-                    break
-            
+                    placed = self.placeUnit(team[i], pos)
+        
+        #TODO (WIP): Update the Grid afterwards to remove all Starting Zone Cells for that team
+        #changing them to Empty Cells
+        print("Remaining Starting Zone Cells:")
+        for rowInd, row in enumerate(self.grid.grid):
+            for colInd, col in enumerate(row):
+                if(team == self.team1) and (str(self.grid.grid[rowInd][colInd]) == "1"):
+                    print((rowInd, colInd))
     
     """
     Method that places the unit on the grid during the placement phase.
     
     Takes the unit to be placed and the position for the unit to be placed at
-    as parameters.
+    as parameters. Returns true if the unit was placed successfully, false otherwise.
     """
     def placeUnit(self, unit, pos):
         row, col = pos[0], pos[1]
         
-        if (self.turn == 0) and (self.grid.grid[row][col].properties["occupiable"] == True):
-            self.grid.grid[row][col] = unit
+        # Checks:
+        # - Is this the placement phase (i.e. Turn == 0)
+        # - Can the Cell be occupied? TODO: Maybe check instead if it IS occupied?
+        # - Is this Cell a Starting Zone?
+        # - Does the unit's team alignment match the Cell's alignment?
+        if (self.turn == 0) and (self.grid.grid[row][col].properties["occupiable"] == True) and (self.grid.grid[row][col].properties["cell-name"] == "Starting Zone") and (self.grid.grid[row][col].properties["alignment"] == unit.properties["alignment"]):
+            """
+            # TODO: Do not destructively place the unit on the grid (overwriting the cell); 
+            # instead the unit should be stored with a pointer to the Cell it is placed at
+            # and the Cell's is-occupied should be updated to indicate what is occupying it
+            """
+            
+            self.grid.grid[row][col] = unit 
+            return True # indicate that the unit was successfully placed on the grid
         else:
-            print("oops no can do")
+            print("Invalid position for placement.")
+            return False # indicate that the unit was not placed successfully
 
 #######################################
 # TEST AREA

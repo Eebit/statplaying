@@ -54,6 +54,8 @@ class Cell:
     def __repr__(self):
         return str(self)
 
+class Unit(Cell):
+    pass
 
 class Grid:
     def __init__(self, width, height):
@@ -110,13 +112,17 @@ class Grid:
                     if not data["global-cells"][x]:
                         break
                     
+                    """
                     # !!!! TEMPORARY !!!!
                     # handler for the nonexistent cell
+                    """
                     if(grid_data[list][cell] == " "):
                         self.add_cell(Cell(data["global-cells"][1]), (list,cell))
                         found = True
                         break
+                    """
                     # !!!! End of Temporary !!!!
+                    """
                     
                     # if the grid_data char is the empty cell, we modify its symbol so that we can parse it properly
                     if(grid_data[list][cell] == "-"):
