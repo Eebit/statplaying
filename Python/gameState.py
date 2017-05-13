@@ -6,9 +6,11 @@ def loadUnits(filepath):
         with open(filepath) as data_file:
             data = json.load(data_file)
             
-        unitList = []
+        unitList = {}
         for i in data["team"]: # :^)
-            unitList.append(Unit(i))
+            u = Unit(i)
+            key = u.properties["cell-name"]
+            unitList[key] = u
         
         return unitList
     except IOError as e:
@@ -49,15 +51,33 @@ class GameState:
         
         self.num_teams = 2 # TODO: hardcoded value to be changed as code evolves
         
-        # TODO: Fix these hardcoded values and load files based on the number of teams initialized
-        self.team1 = loadUnits('units/team1.json')
-        self.team2 = loadUnits('units/team2.json')
-    
+        self.teams = []
+        
+        for i in range(self.num_teams):
+            # TODO: Replace "team#.json" with the loading of individual units
+            team = loadUnits("units/team" + str(i + 1) + ".json")
+            self.teams.append(team)
+        
+    """
+    Method for formatting the GameState information. 
+    """
     def __str__(self):
         turnInfo = (str(self.turn), str(self.phase))
         turnInfo = ('\n').join(turnInfo)
-    
-        state = (turnInfo, str(self.grid), str(self.num_teams), str(self.team1), str(self.team2))
+        
+        teamsList = []
+        
+        for i in range(len(self.teams)):
+            teamStr = "team" + str(i + 1) + "\n"
+            for key, value in self.teams[i].items():
+                ("\n").join((teamStr, value.properties["cell-name"]))
+            teamsList.append(teamStr)
+        
+        # TODO: Currently, teamsList doesn't actually print out the teams.
+        # It only prints out [team1, team2]. The next step will be to properly output
+        # the list of Units on each team.
+        state = (turnInfo, str(self.grid), str(self.num_teams), str(teamsList))
+        
         return ('\n;\n').join(state)
     
     def incrementPhase(self):
@@ -68,27 +88,28 @@ class GameState:
             self.phase = self.phase + 1
     
     def placementPhase(self, team):
-        for i, unit in enumerate(team):
-            print(i)
-            print(unit)
+        for key, value in team.items():
+            print(key)
+            print(value)
             
             placed = False
             
             while (placed == False):
-                coord = input("Enter Cell position for " + team[i].properties["cell-name"] + ": ")
+                coord = input("Enter Cell position for " + value.properties["cell-name"] + ": ")
                 
                 pos = formatInputCoords(coord)
                 print(pos)
                 
                 if(pos != None):
-                    placed = self.placeUnit(team[i], pos)
+                    placed = self.placeUnit(value, pos)
         
         #TODO (WIP): Update the Grid afterwards to remove all Starting Zone Cells for that team
         #changing them to Empty Cells
         print("Remaining Starting Zone Cells:")
         for rowInd, row in enumerate(self.grid.grid):
             for colInd, col in enumerate(row):
-                if(team == self.team1) and (str(self.grid.grid[rowInd][colInd]) == "1"):
+                #TODO: Replace hardcoded team variables for general versions
+                if(team == self.teams[0]) and (str(self.grid.grid[rowInd][colInd]) == "1"):
                     print((rowInd, colInd))
         
         self.incrementPhase()
@@ -141,10 +162,9 @@ if __name__ == "__main__":
     gs = GameState(newGrid)
     print(gs)
     
-    gs.placementPhase(gs.team1)
+    gs.placementPhase(gs.teams[0])
     
     
-    print([Cell for Cell in gs.team1])
+    print([Unit for Unit in gs.teams[0]])
     
     print(gs)
-    

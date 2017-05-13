@@ -117,6 +117,9 @@ user input> Y
     // print(cell-name + " ({" + cell-id + "}) selected")
     // print line break
     // display information based on type of cell -- unit, object, empty...
+    //      if type == 0, display empty cell
+    //      if type == 1, display cell information (i.e. con, passability, occupiability, properties)
+    //      if type == 2, display unit information
 
 >Yume ({Y}) selected
 
