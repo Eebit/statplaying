@@ -185,13 +185,39 @@ class GameState:
             
             u = self.select(pos)
             
-            if type(u) == Unit:
-                print("\tMOVE\t\t(M)")
-                print("\tACT\t\t(A)")
-                print("\tWAIT\t\t(W)")
-                print("\tCANCEL\t\t(C)")
-
+            if (type(u) == Unit) and (u.properties["alignment"] == self.phase):
+                commandInput = {
+                'm': self.movementCommand,
+                'a': self.actionCommand,
+                'w': self.waitCommand,
+                'c': None
+                }
+                
+                while True:
+                    if(u.hasMoved == False):
+                        print("\tMOVE\t\t(M)")
+                    if(u.hasActed == False):    
+                        print("\tACT\t\t(A)")
+                    print("\tWAIT\t\t(W)")
+                    print("\tCANCEL\t\t(C)")
+                
+                    i = input()
+                    i = i.casefold()
+                    try:
+                        commandInput[i](u)
+                    except KeyError:
+                        print("failure")
+    
+    def movementCommand(self, unit):
+        print("Move " + unit.properties["cell-name"])
         
+    def actionCommand(self, unit):
+        print("Act " + unit.properties["cell-name"])
+        
+    def waitCommand(self, unit):
+        print("Wait " + unit.properties["cell-name"])
+        unit.hasMoved = True
+        unit.hasActed = True
     
     def select(self, pos):
         if self.grid.grid[pos[0]][pos[1]].occupiedBy == None:
