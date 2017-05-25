@@ -68,24 +68,24 @@ class Unit(Cell):
             nextCell = (curPos[0]+1, curPos[1])
             if(nextCell[0] < len(grid) and nextCell[1] < len(grid[0])):
                 newPath = curPath.append(nextCell[:])
-                paths.append(mov-1, newPath[:])
+                paths.append(curMov-1, newPath[:])
             
             #Try to move down
             nextCell = (curPos[0]-1, curPos[1])
             if(nextCell[0] < len(grid) and nextCell[1] < len(grid[0])):
                 newPath = curPath.append(nextCell[:])
-                paths.append(mov-1, newPath[:])
+                paths.append(curMov-1, newPath[:])
             
             #Try to move to the right
             nextCell = (curPos[0], curPos[1]+1)
             if(nextCell[0] < len(grid) and nextCell[1] < len(grid[0])):
                 newPath = curPath.append(nextCell[:])
-                paths.append(mov-1, newPath[:])
+                paths.append(curMov-1, newPath[:])
             
             #Try to move to the left
             nextCell = (curPos[0], curPos[1]-1)
             if(nextCell[0] < len(grid) and nextCell[1] < len(grid[0])):
                 newPath = curPath.append(nextCell[:])
-                paths.append(mov-1, newPath[:])
+                paths.append(curMov-1, newPath[:])
 
         return possiblePaths
