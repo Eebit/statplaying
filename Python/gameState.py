@@ -1,5 +1,6 @@
 import json
 from grid import *
+from cell import *
 
 def loadUnits(filepath):
     try:
@@ -9,7 +10,7 @@ def loadUnits(filepath):
         unitList = {}
         for i in data["team"]: # :^)
             u = Unit(i)
-            key = u.properties["cell-name"]
+            key = u.properties["cell-name"].casefold()
             unitList[key] = u
         
         return unitList
@@ -41,7 +42,6 @@ def formatInputCoords(input):
                     
         pos = (row, col)
         return pos
-    
 
 class GameState:
     def __init__(self, grid):
@@ -65,43 +65,67 @@ class GameState:
         turnInfo = (str(self.turn), str(self.phase))
         turnInfo = ('\n').join(turnInfo)
         
-        teamsList = []
-        
-        for i in range(len(self.teams)):
-            teamStr = "team" + str(i + 1) + "\n"
-            for key, value in self.teams[i].items():
-                ("\n").join((teamStr, value.properties["cell-name"]))
-            teamsList.append(teamStr)
-        
-        # TODO: Currently, teamsList doesn't actually print out the teams.
-        # It only prints out [team1, team2]. The next step will be to properly output
-        # the list of Units on each team.
-        state = (turnInfo, str(self.grid), str(self.num_teams), str(teamsList))
+        teamsList = self.teamStr()
+        state = (turnInfo, str(self.grid), str(self.num_teams), teamsList)
         
         return ('\n;\n').join(state)
+       
+    """
+    Helper method to declutter the __str__ method. Constructs a list of
+    units by team and outputs it as a string.
+    """
+    def teamStr(self):
+        strList = []
+        for i in range(len(self.teams)):
+            strList.append("team" + str(i + 1))
+            for key, value in self.teams[i].items():
+                strList.append(str((key, value)))
+            
+            strList.append(";")
+        return ("\n").join(strList)
     
     def incrementPhase(self):
-        if(self.phase + 1 % self.num_teams == 0):
+        if(self.phase % self.num_teams == 0):
             self.turn = self.turn + 1
             self.phase = 1
         else:
             self.phase = self.phase + 1
     
-    def placementPhase(self, team):
-        for key, value in team.items():
-            print(key)
-            print(value)
+    def placementPhase(self):
+        team = self.teams[ self.phase - 1 ]
+        
+        placeable = len(team.keys()) # The number of units on this team that can be placed (that is, all of them)
+        
+        while(placeable > 0):
+            print("Available Units for Placement:")
+            for k in team.keys():
+                if team[k].position == None:
+                    print(k)
+            
+            # Loop the input state until the user provides a valid key as an identifier
+            while True:
+                u = input("Select a Unit for Placement: ")
+                u = u.casefold()
+                
+                try:
+                    unit = team[u]
+                    break
+                except KeyError as e:
+                    print("didn't work")
+            
             
             placed = False
             
             while (placed == False):
-                coord = input("Enter Cell position for " + value.properties["cell-name"] + ": ")
+                coord = input("Enter Cell position for " + unit.properties["cell-name"] + ": ")
                 
                 pos = formatInputCoords(coord)
                 print(pos)
                 
                 if(pos != None):
-                    placed = self.placeUnit(value, pos)
+                    placed = self.placeUnit(unit, pos)
+                
+            placeable = placeable - 1 # decrement the number of placeable units
         
         #TODO (WIP): Update the Grid afterwards to remove all Starting Zone Cells for that team
         #changing them to Empty Cells
@@ -136,18 +160,54 @@ class GameState:
         # - Is this Cell a Starting Zone?
         # - Does the unit's team alignment match the Cell's alignment?
         if (self.turn == 0) and (self.grid.grid[row][col].properties["occupiable"] == True) and (self.grid.grid[row][col].properties["cell-name"] == "Starting Zone") and (self.grid.grid[row][col].properties["alignment"] == unit.properties["alignment"]):
-            """
-            # TODO: Do not destructively place the unit on the grid (overwriting the cell); 
-            # instead the unit should be stored with a pointer to the Cell it is placed at
-            # and the Cell's is-occupied should be updated to indicate what is occupying it
-            """
-            
-            self.grid.grid[row][col] = unit 
+            self.grid.addEmptyCell((row, col))
+            self.grid.grid[row][col].occupiedBy = unit
+            unit.assignPosition((row,col))
             return True # indicate that the unit was successfully placed on the grid
         else:
             print("Invalid position for placement.")
             return False # indicate that the unit was not placed successfully
+    
+    def gameplayPhase(self):
+        print("\n~ Team " + str(self.phase) + " Phase " + str(self.turn) + " ~\n")
+        
+        while True:
+            while True:
+                coord = input("Select coordinate: ")
+                pos = formatInputCoords(coord)
+                
+                if(pos[0] < 0) or (pos[0] >= self.grid.height):
+                    print("Out of Bounds")
+                elif(pos[1] < 0) or (pos[1] >= self.grid.width):
+                    print("Out of Bounds")
+                else:
+                    break
+            
+            u = self.select(pos)
+            
+            if type(u) == Unit:
+                print("\tMOVE\t\t(M)")
+                print("\tACT\t\t(A)")
+                print("\tWAIT\t\t(W)")
+                print("\tCANCEL\t\t(C)")
 
+        
+    
+    def select(self, pos):
+        if self.grid.grid[pos[0]][pos[1]].occupiedBy == None:
+            print(self.grid.grid[pos[0]][pos[1]].output())
+            return self.grid.grid[pos[0]][pos[1]]
+        else:
+            print(self.grid.grid[pos[0]][pos[1]].occupiedBy.output())
+            return self.grid.grid[pos[0]][pos[1]].occupiedBy
+
+"""
+Will probably use this class to wrap up the interface so it's not all done in the GameState class
+"""
+class Game:
+    def __init__(self):
+        pass
+        
 #######################################
 # TEST AREA
 #######################################
@@ -161,10 +221,15 @@ if __name__ == "__main__":
     
     gs = GameState(newGrid)
     print(gs)
+    gs.teamStr()
     
-    gs.placementPhase(gs.teams[0])
+    while(gs.turn == 0):
+        gs.placementPhase()
+        print(gs.grid)
     
+    #print("Yume T1 is at " + str(gs.teams[0]["Yume"].position))
     
-    print([Unit for Unit in gs.teams[0]])
+    while(True):
+        gs.gameplayPhase()
+        print(gs.grid)
     
-    print(gs)

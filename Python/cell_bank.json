@@ -209,6 +209,24 @@
             
             "has-stats": false
         },
+        {
+            "cell-name": "Starting Zone",
+            "cell-id": "2",
+            "color": "#0000ff",
+            "classification": 0,
+            "alignment": 2,
+            
+            "exists": true,
+            
+            "passable": true,
+            "occupiable": true,
+            "destructable": false,
+            "block-ranged": false,
+            
+            "is-occupied": false,
+            
+            "has-stats": false
+        },
         null
     ]
 }

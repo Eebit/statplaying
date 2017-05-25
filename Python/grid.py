@@ -1,4 +1,5 @@
 import json
+from cell import *
 
 def get_cell_data(filepath):
     try:
@@ -43,27 +44,15 @@ def read_grid(filepath):
         print("Cannot open " + filepath)
         return []
 
-
-class Cell:
-    def __init__(self, cell_dict):
-        self.properties = cell_dict
-            
-    def __str__(self):
-        return self.properties["cell-id"]
-        
-    def __repr__(self):
-        return str(self)
-
-class Unit(Cell):
-    pass
-
 class Grid:
     def __init__(self, width, height):
         self.width = width # width = number of columns
         self.height = height # height = number of rows
         
-        d = get_cell_data('cell_bank.json')
-                
+        self.d = get_cell_data('cell_bank.json')
+        
+        d = self.d
+        
         self.grid = []
         for row in range(height):
             rowList = []
@@ -78,14 +67,17 @@ class Grid:
         for row in range(self.height):
             out2 = []
             for col in range(self.width):
-                # test if the Cell is an empty cell for printing the "basic" grid
-                if(self.grid[row][col].properties["cell-id"] == " "):
-                    if(self.grid[row][col].properties["exists"] == True):
-                        out2.append("-") # prints a dash for empty cell rather than a space (for visibility)
-                    else:
-                        out2.append(" ")
+                if(self.grid[row][col].occupiedBy != None):
+                    out2.append(str(self.grid[row][col].occupiedBy))
                 else:
-                    out2.append(str(self.grid[row][col]))
+                    # test if the Cell is an empty cell for printing the "basic" grid
+                    if(self.grid[row][col].properties["cell-id"] == " "):
+                        if(self.grid[row][col].properties["exists"] == True):
+                            out2.append("-") # prints a dash for empty cell rather than a space (for visibility)
+                        else:
+                            out2.append(" ")
+                    else:
+                        out2.append(str(self.grid[row][col]))
             out.append(out2)
         
         return '\n'.join([''.join(x) for x in out])
@@ -97,6 +89,9 @@ class Grid:
     """
     def add_cell(self, cell, location):
         self.grid[location[0]][location[1]] = cell
+    
+    def addEmptyCell(self, location):
+        self.grid[location[0]][location[1]] = Cell(self.d["global-cells"][0])
     
     """
     Iterate over the grid_data list of lists returned by read_grid()
