@@ -43,6 +43,16 @@ def formatInputCoords(input):
         pos = (row, col)
         return pos
 
+def formatOutputCoords(input):
+    if len(input) != 2:
+        print("Invalid tuple value")
+        return None
+    else:
+        row = str(chr(input[0] + 65))
+        col = input[1] + 1
+                
+        return row + str(col)
+
 class GameState:
     def __init__(self, grid):
         self.grid = grid
@@ -248,6 +258,9 @@ if __name__ == "__main__":
     gs = GameState(newGrid)
     print(gs)
     gs.teamStr()
+    
+    print("\n")
+    print(formatOutputCoords( (1, 8) ))
     
     print(gs.grid.getCell( (1, 8) ))
     print(gs.grid.getCell( (0, 10) ))
