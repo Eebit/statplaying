@@ -1,6 +1,7 @@
 import json
 from grid import *
 from cell import *
+from util import *
 
 class GridDisplay:
     def __init__(self, grid):

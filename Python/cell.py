@@ -1,3 +1,5 @@
+from util import *
+
 class Cell:
     def __init__(self, cell_dict):
         self.properties = cell_dict
