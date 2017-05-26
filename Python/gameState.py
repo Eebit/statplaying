@@ -86,7 +86,7 @@ class GameState:
                     unit = team[u]
                     break
                 except KeyError:
-                    print("didn't work")
+                    print("Invalid Unit Key")
             
             
             placed = False
@@ -163,10 +163,9 @@ class GameState:
             
             if (type(u) == Unit) and (u.properties["alignment"] == self.phase):
                 commandInput = {
-                'm': self.movementCommand,
-                'a': self.actionCommand,
-                'w': self.waitCommand,
-                'c': None
+                'm': u.movementCommand,
+                'a': u.actionCommand,
+                'w': u.waitCommand,
                 }
                 
                 while True:
@@ -177,31 +176,28 @@ class GameState:
                     print("\tWAIT\t\t(W)")
                     print("\tCANCEL\t\t(C)")
                 
-                    i = input()
+                    i = input("Enter a Command: ")
                     i = i.casefold()
+                    
+                    if i == "c":
+                        break
+                    
+                    # TODO: Need to handle situations where the unit has Acted or Moved, since
+                    # currently, only the instructions are hidden. If the user types M after hasMoved is
+                    # set, then they can still move again.
                     try:
-                        commandInput[i](u)
+                        commandInput[i]()
                     except KeyError:
                         print("failure")
     
-    def movementCommand(self, unit):
-        print("Move " + unit.properties["cell-name"])
-        
-    def actionCommand(self, unit):
-        print("Act " + unit.properties["cell-name"])
-        
-    def waitCommand(self, unit):
-        print("Wait " + unit.properties["cell-name"])
-        unit.hasMoved = True
-        unit.hasActed = True
     
     def select(self, pos):
-        if self.grid.grid[pos[0]][pos[1]].occupiedBy == None:
-            print(self.grid.grid[pos[0]][pos[1]].output())
-            return self.grid.grid[pos[0]][pos[1]]
+        if self.grid.getCell(pos).occupiedBy == None:
+            print(self.grid.getCell(pos).output())
+            return self.grid.getCell(pos)
         else:
-            print(self.grid.grid[pos[0]][pos[1]].occupiedBy.output())
-            return self.grid.grid[pos[0]][pos[1]].occupiedBy
+            print(self.grid.getCell(pos).occupiedBy.output())
+            return self.grid.getCell(pos).occupiedBy
 
 """
 Will probably use this class to wrap up the interface so it's not all done in the GameState class
@@ -216,7 +212,7 @@ class Game:
 
 if __name__ == "__main__":
     newGrid = Grid(9, 9)
-    data = get_cell_data('cell_bank.json')
+    data = loadJson('cell_bank.json')
     grid_data = read_grid("state_rec_1.txt")
     newGrid.populate_grid_from_file(data, grid_data)
     

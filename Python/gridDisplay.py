@@ -32,7 +32,7 @@ if __name__ == "__main__":
     newGrid = Grid(9, 9)
     print(str(newGrid))
     
-    data = get_cell_data('cell_bank.json')
+    data = loadJson('cell_bank.json')
     
     grid_data = read_grid("state_rec_1.txt")
     print(grid_data)

@@ -38,7 +38,19 @@ class Unit(Cell):
     def output(self):
         outStr = str(self.properties["cell-name"]) + " (" + str(self.properties["profession"]["name"]) + ")" +"\nHP:\t\t" + str(self.stats["current-health"]) + "/" + str(self.stats["max-health"]) + "\nMP:\t\t" + str(self.stats["current-mana"]) + "/" + str(self.stats["max-mana"]) + "\nAtk:\t\t" + str(self.stats["attack"]) +"\nDef:\t\t" + str(self.stats["defense"]) + "\nInt:\t\t" + str(self.stats["intelligence"]) + "\nSpr:\t\t" + str(self.stats["spirit"]) + "\nCritical:\t" + str(self.stats["critical"]) + "%" + "\nEvasion:\t" + str(self.stats["evasion"]) + "%" + "\nMovement:\t" + str(self.stats["movement"]) + " Cells" + "\n{/////} {/////} {/////}"
         return outStr
-
+    
+    def movementCommand(self):
+        print("Move " + self.properties["cell-name"])
+        self.hasMoved = True
+        
+    def actionCommand(self):
+        print("Act " + self.properties["cell-name"])
+        self.hasActed = True
+        
+    def waitCommand(self):
+        print("Wait " + self.properties["cell-name"])
+        self.hasMoved = True
+        self.hasActed = True
 
     #Takes in the grid and the entire cell dictionary does not account for other Units yet
     def getMovementRange(self, grid, full_cell_dict):
