@@ -132,4 +132,13 @@ class Grid:
                 
                 if(found == False):
                     print("Could not find data for {" + grid_data[list][cell] + "} in JSON cell bank.")
+    
+    
+    def getCell(self, coord):
+        try:
+            cell = self.grid[coord[0]][coord[1]]
+        except IndexError:
+            cell = None
+            print("Coordinate was not in bounds")
         
+        return cell

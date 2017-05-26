@@ -249,11 +249,14 @@ if __name__ == "__main__":
     print(gs)
     gs.teamStr()
     
+    print(gs.grid.getCell( (1, 8) ))
+    print(gs.grid.getCell( (0, 10) ))
+    
     while(gs.turn == 0):
         gs.placementPhase()
         print(gs.grid)
     
-    #print("Yume T1 is at " + str(gs.teams[0]["Yume"].position))
+    #print("Yume T1 is at " + str(gs.teams[0]["yume"].position))
     
     while(True):
         gs.gameplayPhase()
