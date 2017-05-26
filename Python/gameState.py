@@ -85,7 +85,7 @@ class GameState:
                 try:
                     unit = team[u]
                     break
-                except KeyError as e:
+                except KeyError:
                     print("didn't work")
             
             
@@ -102,14 +102,17 @@ class GameState:
                 
             placeable = placeable - 1 # decrement the number of placeable units
         
-        #TODO (WIP): Update the Grid afterwards to remove all Starting Zone Cells for that team
-        #changing them to Empty Cells
-        print("Remaining Starting Zone Cells:")
+        # Update the Grid afterwards to remove all Starting Zone Cells for that team,
+        # changing them to Empty Cells
+        
+        # print("Remaining Starting Zone Cells:")
         for rowInd, row in enumerate(self.grid.grid):
             for colInd, col in enumerate(row):
-                #TODO: Replace hardcoded team variables for general versions
-                if(team == self.teams[0]) and (str(self.grid.grid[rowInd][colInd]) == "1"):
-                    print((rowInd, colInd))
+                # Checks to see if the team is the one that should be placing units 
+                # and whether or not each Cell matches the corresponding Starting Zone
+                if(team == self.teams[ self.phase - 1 ]) and (str(self.grid.getCell( (rowInd, colInd) )) == str(self.phase)):
+                    # print((rowInd, colInd))
+                    self.grid.addEmptyCell( (rowInd, colInd) )
         
         self.incrementPhase()
     
@@ -120,12 +123,10 @@ class GameState:
     as parameters. Returns true if the unit was placed successfully, false otherwise.
     """
     def placeUnit(self, unit, pos):
-        row, col = pos[0], pos[1]
-        
-        if(row < 0) or (row >= self.grid.height):
+        if(pos[0] < 0) or (pos[0] >= self.grid.height):
             print("Out of Bounds")
             return False
-        if(col < 0) or (col >= self.grid.width):
+        if(pos[1] < 0) or (pos[1] >= self.grid.width):
             print("Out of Bounds")
             return False
         
@@ -134,10 +135,10 @@ class GameState:
         # - Can the Cell be occupied? TODO: Maybe check instead if it IS occupied?
         # - Is this Cell a Starting Zone?
         # - Does the unit's team alignment match the Cell's alignment?
-        if (self.turn == 0) and (self.grid.grid[row][col].properties["occupiable"] == True) and (self.grid.grid[row][col].properties["cell-name"] == "Starting Zone") and (self.grid.grid[row][col].properties["alignment"] == unit.properties["alignment"]):
-            self.grid.addEmptyCell((row, col))
-            self.grid.grid[row][col].occupiedBy = unit
-            unit.assignPosition((row,col))
+        if (self.turn == 0) and (self.grid.getCell(pos).properties["occupiable"] == True) and (self.grid.getCell(pos).properties["cell-name"] == "Starting Zone") and (self.grid.getCell(pos).properties["alignment"] == unit.properties["alignment"]):
+            self.grid.addEmptyCell(pos)
+            self.grid.grid[ pos[0] ][ pos[1] ].occupiedBy = unit
+            unit.assignPosition(pos)
             return True # indicate that the unit was successfully placed on the grid
         else:
             print("Invalid position for placement.")
