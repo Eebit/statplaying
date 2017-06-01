@@ -73,70 +73,44 @@ class Unit(Cell):
         outStr = str(self.properties["cell-name"]) + " (" + str(self.properties["profession"]["name"]) + ")" +"\nHP:\t\t" + str(self.stats["current-health"]) + "/" + str(self.stats["max-health"]) + "\nMP:\t\t" + str(self.stats["current-mana"]) + "/" + str(self.stats["max-mana"]) + "\nAtk:\t\t" + str(self.stats["attack"]) +"\nDef:\t\t" + str(self.stats["defense"]) + "\nInt:\t\t" + str(self.stats["intelligence"]) + "\nSpr:\t\t" + str(self.stats["spirit"]) + "\nCritical:\t" + str(self.stats["critical"]) + "%" + "\nEvasion:\t" + str(self.stats["evasion"]) + "%" + "\nMovement:\t" + str(self.stats["movement"]) + " Cells" + "\n{/////} {/////} {/////}"
         return outStr
     
-    def movementCommand(self):
+    def movementCommand(self, grid):
         print("Move " + self.properties["cell-name"])
+        print(self.getMovementRange(grid) )
         self.hasMoved = True
         
-    def actionCommand(self):
+    def actionCommand(self, grid):
         print("Act " + self.properties["cell-name"])
         self.hasActed = True
         
-    def waitCommand(self):
+    def waitCommand(self, grid):
         print("Wait " + self.properties["cell-name"])
         self.hasMoved = True
         self.hasActed = True
     
-    def getRange(self, grid):
-        pass
-    
-    #Takes in the grid and the entire cell dictionary does not account for other Units yet
-    def getMovementRange(self, grid, full_cell_dict):
+    def getMovementRange(self, grid):
         mov = self.stats["movement"]
-        cur = (mov, [self.position])
-        globalCells = full_cell_dict["global-cells"]
-
-        cellByID = {}
-        for cellType in globalCells:
-            cellByID[cellType["cell-id"]] = cellType
-
-        paths = []
-        paths.append(cur)
-        possiblePaths = []
-        while(paths != []):
-            curMov, curPath = paths.pop()
-            curPos = curPath[-1]
-            curCell = grid[curPos[0]][curPos[1]]
-
+        cur = (mov, self.position)
+        
+        queue = []
+        queue.append(cur)
+        possible = []
+        
+        while(queue != []):
+            curMov, curPos = queue.pop()
+            
+            curCell = grid.getCell( curPos )
+            
             #If you have 0 moves or more and the current cell is occupiable, then store the current path
-            if( (curMov >= 0) and (cellByID[curCell]["occupiable"] == True) and (curPath not in possiblePaths)):
-                possiblePaths.append(curPath)
-
+            if( (curMov >= 0) and (curCell.properties["occupiable"] == True) and (curCell.position not in possible) ):
+                possible.append( curCell.position )
+            
             #If the current path ran out of moves or isn't passable, go to the next path
-            if(curMov == 0 or cellByID[curCell]["passable"] == False): #TODO: Test for equal alignment here too
+            if( (curMov == 0) or (curCell.properties["passable"] == False) ): #TODO: Test for equal alignment here too
                 continue
-
-            #Try to move up
-            nextCell = (curPos[0]+1, curPos[1])
-            if(nextCell[0] < len(grid) and nextCell[1] < len(grid[0])):
-                newPath = curPath.append(nextCell[:])
-                paths.append(curMov-1, newPath[:])
             
-            #Try to move down
-            nextCell = (curPos[0]-1, curPos[1])
-            if(nextCell[0] < len(grid) and nextCell[1] < len(grid[0])):
-                newPath = curPath.append(nextCell[:])
-                paths.append(curMov-1, newPath[:])
+            n = curCell.getNeighbors(grid)
             
-            #Try to move to the right
-            nextCell = (curPos[0], curPos[1]+1)
-            if(nextCell[0] < len(grid) and nextCell[1] < len(grid[0])):
-                newPath = curPath.append(nextCell[:])
-                paths.append(curMov-1, newPath[:])
-            
-            #Try to move to the left
-            nextCell = (curPos[0], curPos[1]-1)
-            if(nextCell[0] < len(grid) and nextCell[1] < len(grid[0])):
-                newPath = curPath.append(nextCell[:])
-                paths.append(curMov-1, newPath[:])
-
-        return possiblePaths
+            for cell in n:
+                queue.append( (curMov - 1, cell.position) )
+                
+        return possible # This is a list of valid positions that can be moved to -- does not account for paths to that position
