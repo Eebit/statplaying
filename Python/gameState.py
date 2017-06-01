@@ -222,10 +222,14 @@ if __name__ == "__main__":
     gs.teamStr()
     
     print("\n")
-    print(formatOutputCoords( (1, 8) ))
+    print(formatOutputCoords( (8, 8) ))
     
-    print(gs.grid.getCell( (1, 8) ))
-    print(gs.grid.getCell( (0, 10) ))
+    print(gs.grid.getCell( (8, 8) ))
+    
+    print("Position of (B9) " + str(gs.grid.getCell( (8, 8) ).position) )
+    
+    c = gs.grid.getCell( (8, 8) )
+    print("Neighbors: " + str(c.getNeighbors( gs.grid )) )
     
     while(gs.turn == 0):
         gs.placementPhase()

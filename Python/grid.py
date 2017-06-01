@@ -46,10 +46,12 @@ class Grid:
     (as a tuple; (row,col)) on the Grid.
     """
     def add_cell(self, cell, location):
+        cell.assignPosition(location)
         self.grid[location[0]][location[1]] = cell
     
     def addEmptyCell(self, location):
         self.grid[location[0]][location[1]] = Cell(self.d["global-cells"][0])
+        self.grid[location[0]][location[1]].assignPosition(location)
     
     """
     Iterate over the grid_data list of lists returned by read_grid()
