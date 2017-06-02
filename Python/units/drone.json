@@ -1,0 +1,100 @@
+{
+    "cell-name": ["IKA", "ARMA", "DAFT"],
+    "cell-id": ["I", "A", "D"],
+    "color": "#0000ff",
+    "classification": 2,
+    "alignment": 2,
+    
+    "exists": true,
+    
+    "passable": true,
+    "occupiable": false,
+    "destructable": true,
+    "block-ranged": false,
+    
+    "has-stats": true,
+    
+    "base-stats": {
+        "current-health": 25,
+        "max-health": 25,
+        "current-mana": 25,
+        "max-mana": 25,
+        "attack": 6,
+        "defense": 4,
+        "intelligence": 1,
+        "spirit": 3,
+        "critical": 0,
+        "evasion": 3,
+        "guard": 0,
+        "accuracy": 100,
+        "movement": 3,
+        "x-gauge": 0,
+        "constitution": 2
+    },
+    
+    "gender": "Robot",
+    "level": 1,
+    "profession": {
+        "name": "Security Drone Mk. I",
+        "flavor": "A shorter robot with only two legs and a large, rounded top. It is fitted with a red lens on its top, within which its circuitry can be seen.", 
+        "ba-type": 0 
+    },
+
+    "equipment": [
+        {
+            "type": "armor", 
+            "name": "Basic Plating", 
+            "flavor": "The Security Drones in this area of the factory seem to have some slight renovations, consisting of simple metal guards on their body.", 
+            "stats": {
+                "health": 0,
+                "mana": 0,
+                "attack": 0,
+                "defense": 1,
+                "intelligence": 0,
+                "spirit": 0,
+                "critical": 0,
+                "evasion": 0,
+                "movement": 0
+            }
+        },
+        {
+            "type": "accessory", 
+            "name": "ProtoCore", 
+            "flavor": "A proprietary piece of hardware of an unidentified company. Small sphere installed into mechanical objects in order to facilitate the conversion from Energy into Mana.", 
+            "stats": {
+                "health": 0,
+                "mana": 5,
+                "attack": 0,
+                "defense": 0,
+                "intelligence": 0,
+                "spirit": 0,
+                "critical": 0,
+                "evasion": 0,
+                "movement": 0
+            }
+        }
+    ],
+
+    "a-ability": [
+        {
+            "name": "TYPE-0: DETAIN",
+            
+            "a-skills": [
+                { 
+                    "refer": "[b]+ FIST: Puncture Armour:[/b] [i]The Security Drone is equipped with the ability to analyze weak points in any target's armour, and it most certainly will use every opportunity possible to exploit a detected weakness.[/i] Single Hit. 110% ATK Damage. Lowers Target's DEF by 10% (Stackable to 50%). On Stack: Refresh Duration. Cast Time: Instant. Accuracy: 100%. Variance: 0%. Range: Adjacent Cell. Element: Neutral. 7 MP. --- MODE: Supercharge: Increases Damage Ratio to 120%. Increases DEF Reduction to 20%."
+                },
+                { 
+                    "refer2": "[b]+ BEAM: Electropulse:[/b] [i]The Security Drone's lens is equipped with overloaded electricity, giving it the capacity to stun its targets in their tracks.[/i] Single Hit. 80% ATK Damage. Chance of Spasm (Mod. 0). Cast Time: Instant. Accuracy: 100%. Variance: 0%. Range: 3 Cells. Element: Thunder. 6 MP. --- MODE: Supercharge: Increases Damage Ratio to 100%. Upgrades Spasm to Paralyze."
+                },
+                null
+            ]
+        }
+    ],
+
+    "reaction": "None.",
+    "support": "MODE: Supercharge - [i]As this unit focuses on a single target, their abilities become drastically more dangerous. Augments the User's A-Skills with an added field underneath each, dubbed 'MODE: Supercharge,' which activate when the User attacks the same Target it did on the last Turn for no extra MP Cost.[/i]",
+    "burst": "None.",
+
+    "trigger": "None.",
+    "ability": "None."
+}

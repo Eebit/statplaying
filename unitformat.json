@@ -1,4 +1,4 @@
-"unit-info": {
+{
     "gender": "",
     "level": "",
     "profession": {
@@ -65,9 +65,9 @@
             "name": "",
             
             "a-skills": [
-                { "refer": "to A-Skill format" }
-                { "refer": "to A-Skill format" }
-                { "refer": "to A-Skill format..." }
+                { "refer": "to A-Skill format" },
+                { "refer2": "to A-Skill format" },
+                { "refer3": "to A-Skill format..." }
             ]
         }
     ],

@@ -26,12 +26,7 @@ class GameState:
         
         self.num_teams = 2 # TODO: hardcoded value to be changed as code evolves
         
-        self.teams = []
-        
-        for i in range(self.num_teams):
-            # TODO: Replace "team#.json" with the loading of individual units
-            team = loadUnits("units/team" + str(i + 1) + ".json")
-            self.teams.append(team)
+        self.teams = loadUnitsUtil(self.num_teams)
         
     """
     Method for formatting the GameState information. 
@@ -222,7 +217,6 @@ if __name__ == "__main__":
     data = loadJson('cell_bank.json')
     grid_data = read_grid("state_rec_1.txt")
     newGrid.populate_grid_from_file(data, grid_data)
-    
     
     gs = GameState(newGrid)
     print(gs)

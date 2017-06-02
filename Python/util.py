@@ -1,5 +1,7 @@
 import json
 import random
+import os
+import cell
 
 def loadJson(filepath):
     try:
@@ -9,16 +11,41 @@ def loadJson(filepath):
     except IOError:
         print("Cannot open " + filepath)
         
-def loadUnitsUtil():
-    # load the team file here
-
-    unitList = {}
-    for i in data["team"]: # :^)
-        u = Unit(i)
-        key = u.properties["cell-name"].casefold()
-        unitList[key] = u
+def loadUnitsUtil(numTeams):
+    unitFiles = os.listdir("units")
+    teamList = [] # a list of dictionaries that contain the units
     
-    return unitList
+    # create the number of dictionaries needed to store each team
+    for i in range(numTeams):
+        teamList.append({})
+    
+    for file in unitFiles:
+        # load all JSON files in the current directory
+        unitData = loadJson("units/" + file)
+        
+        # handler for situations when multiple units inherit from the same JSON
+        if(type(unitData["cell-name"]) == list):
+            for i in range(len(unitData["cell-name"])):
+                copy = unitData.copy()
+                
+                copy["cell-name"] = unitData["cell-name"][i]
+                copy["cell-id"] = unitData["cell-id"][i]
+                
+                u = cell.Unit(copy)
+                key = u.properties["cell-name"].casefold()
+        
+                team = teamList[ unitData["alignment"] - 1 ]
+                team[key] = u
+        # single unit generated from single JSON
+        else:
+            u = cell.Unit(unitData)
+            key = u.properties["cell-name"].casefold()
+    
+            team = teamList[ unitData["alignment"] - 1 ]
+            team[key] = u
+
+    
+    return teamList
 
 """
 Utility method that takes an input string in the form of our "grid notation"

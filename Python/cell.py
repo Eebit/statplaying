@@ -86,7 +86,11 @@ class Unit(Cell):
         self.position = None
         
         self.loadBaseStats()
-        self.basicAttackRange = self.properties["equipment"][0]["range"]
+        
+        try:
+            self.basicAttackRange = self.properties["equipment"][0]["range"]
+        except KeyError:
+            self.basicAttackRange = 1
         
         self.hasMoved = False
         self.hasActed = False
@@ -94,7 +98,7 @@ class Unit(Cell):
         self.processed = False # processed flag is used for when a unit has been fully processed for the turn, either automatically (having taken both act and move commands) or manually (by waiting)
         
     def loadBaseStats(self):
-        self.stats = self.properties["stats"]
+        self.stats = self.properties["base-stats"]
     
     def output(self):
         outStr = str(self.properties["cell-name"]) + " (" + str(self.properties["profession"]["name"]) + ")" +"\nHP:\t\t" + str(self.stats["current-health"]) + "/" + str(self.stats["max-health"]) + "\nMP:\t\t" + str(self.stats["current-mana"]) + "/" + str(self.stats["max-mana"]) + "\nAtk:\t\t" + str(self.stats["attack"]) +"\nDef:\t\t" + str(self.stats["defense"]) + "\nInt:\t\t" + str(self.stats["intelligence"]) + "\nSpr:\t\t" + str(self.stats["spirit"]) + "\nCritical:\t" + str(self.stats["critical"]) + "%" + "\nEvasion:\t" + str(self.stats["evasion"]) + "%" + "\nMovement:\t" + str(self.stats["movement"]) + " Cells" + "\nX-Gauge:\t" + str(self.stats["x-gauge"]) + "/30"
