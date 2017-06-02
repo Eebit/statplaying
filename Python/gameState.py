@@ -153,7 +153,9 @@ class GameState:
                 coord = input("Select coordinate: ")
                 pos = formatInputCoords(coord)
                 
-                if(pos[0] < 0) or (pos[0] >= self.grid.height):
+                if pos == None:
+                    print("NoneType")
+                elif(pos[0] < 0) or (pos[0] >= self.grid.height):
                     print("Out of Bounds")
                 elif(pos[1] < 0) or (pos[1] >= self.grid.width):
                     print("Out of Bounds")
@@ -169,7 +171,7 @@ class GameState:
                 'w': u.waitCommand,
                 }
                 
-                while True:
+                while not u.processed:
                     if(u.hasMoved == False):
                         print("\tMOVE\t\t(M)")
                     if(u.hasActed == False):    
@@ -192,14 +194,16 @@ class GameState:
                             commandInput[i](self.grid)
                     except KeyError:
                         print("failure")
-    
+                    
+                    if(u.hasActed == True and u.hasMoved == True):
+                        u.processed = True
     
     def select(self, pos):
         if self.grid.getCell(pos).occupiedBy == None:
-            print(self.grid.getCell(pos).output())
+            print("\n" + self.grid.getCell(pos).output() + "\n")
             return self.grid.getCell(pos)
         else:
-            print(self.grid.getCell(pos).occupiedBy.output())
+            print("\n" + self.grid.getCell(pos).occupiedBy.output() + "\n")
             return self.grid.getCell(pos).occupiedBy
 
 """

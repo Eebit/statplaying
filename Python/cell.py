@@ -97,7 +97,7 @@ class Unit(Cell):
         self.stats = self.properties["stats"]
     
     def output(self):
-        outStr = str(self.properties["cell-name"]) + " (" + str(self.properties["profession"]["name"]) + ")" +"\nHP:\t\t" + str(self.stats["current-health"]) + "/" + str(self.stats["max-health"]) + "\nMP:\t\t" + str(self.stats["current-mana"]) + "/" + str(self.stats["max-mana"]) + "\nAtk:\t\t" + str(self.stats["attack"]) +"\nDef:\t\t" + str(self.stats["defense"]) + "\nInt:\t\t" + str(self.stats["intelligence"]) + "\nSpr:\t\t" + str(self.stats["spirit"]) + "\nCritical:\t" + str(self.stats["critical"]) + "%" + "\nEvasion:\t" + str(self.stats["evasion"]) + "%" + "\nMovement:\t" + str(self.stats["movement"]) + " Cells" + "\n{/////} {/////} {/////}"
+        outStr = str(self.properties["cell-name"]) + " (" + str(self.properties["profession"]["name"]) + ")" +"\nHP:\t\t" + str(self.stats["current-health"]) + "/" + str(self.stats["max-health"]) + "\nMP:\t\t" + str(self.stats["current-mana"]) + "/" + str(self.stats["max-mana"]) + "\nAtk:\t\t" + str(self.stats["attack"]) +"\nDef:\t\t" + str(self.stats["defense"]) + "\nInt:\t\t" + str(self.stats["intelligence"]) + "\nSpr:\t\t" + str(self.stats["spirit"]) + "\nCritical:\t" + str(self.stats["critical"]) + "%" + "\nEvasion:\t" + str(self.stats["evasion"]) + "%" + "\nMovement:\t" + str(self.stats["movement"]) + " Cells" + "\nX-Gauge:\t" + str(self.stats["x-gauge"]) + "/30"
         return outStr
         
     """
@@ -176,19 +176,40 @@ class Unit(Cell):
     def actionCommand(self, grid):
         print("Act " + self.properties["cell-name"])
         
+        commandInput = {
+        'b': "",
+        'm': "",
+        'i': "",
+        }
+        
+        print("\t\tBASIC ATTACK\t\t(B)")
+        for a in range(len(self.properties["a-ability"])):
+            print("\t\t" + str(self.properties["a-ability"][a]["name"]).upper() + "\t\t(" + str(a + 1) + ")")
+            commandInput[str(a + 1)] = ""
+        print("\t\tCYCLE MANA\t\t(M) \n\t\tITEM\t\t\t(I)")
+        if(self.stats["x-gauge"] >= 0):
+            print("\t\tE-Trigger\t\t(E)")
+            commandInput['e'] = ""
+        if(self.stats["x-gauge"] >= 0):
+            print("\t\tX-Ability\t\t(X)")
+            commandInput['x'] = ""
+        print("\t\tCANCEL\t\t\t(C)")
+        
+        """
+        
+        
         l = self.getNeighbors(grid)
         
         for i in l:
             if(i.occupiedBy != None):
                 d = damageFormula(self, "ba", i.occupiedBy)
-        
+        """
         self.hasActed = True
         
     def waitCommand(self, grid):
         print("Wait " + self.properties["cell-name"])
         self.hasMoved = True
         self.hasActed = True
-        self.processed = True
     
     """
     #
@@ -214,7 +235,7 @@ class Unit(Cell):
                 possible.append( curCell.position )
             
             #If the current path ran out of moves or isn't passable, go to the next path
-            if( (curMov == 0) or (curCell.properties["passable"] == False) ): #TODO: Test for equal alignment here too
+            if( (curMov == 0) or ( (curCell.properties["passable"] == False) ) ): #TODO: Test for equal alignment here too
                 continue
             
             n = curCell.getNeighbors(grid)
