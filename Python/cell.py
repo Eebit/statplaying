@@ -26,10 +26,35 @@ class Cell:
     etc.
     """
     def output(self):
-        if(self.properties["has-stats"] == False):
-            outStr = str(self.properties["cell-name"])
-        else:
-            outStr = str(self.properties["cell-name"] + "\nstats lol")
+        if(self.properties["classification"] == 0): # empty cell
+            outStr = "{" + str(self.properties["cell-id"]) + "} - " + str(self.properties["cell-name"])
+        else: # object cell
+            if(self.properties["block-ranged"] == True):
+                block = "Block Property"
+            else:
+                block = ""
+            
+            if(self.properties["destructable"] == True):
+                des = "Can be Destroyed"
+            else:
+                des = "Indestructible"
+            
+            if(self.properties["passable"] == True):
+                pas = "Can be Passed"
+            else:
+                pas = "Cannot be Passed"
+            
+            if(self.properties["occupiable"] == True):
+                occ = "Can be Occupied"
+            else:
+                occ = "Cannot be Occupied"
+            
+            if(self.properties["has-stats"] == True):
+                stats = "CON: " + str(self.properties["stats"]["constitution"]) + "/10"
+            else:
+                stats = ""
+            
+            outStr = "{" + str(self.properties["cell-id"]) + "} - " +  str(self.properties["cell-name"] + "\n" + block + "\n" + des + "\n" + pas + "\n" + occ + "\n" + stats)
         return outStr
     
     """
@@ -88,11 +113,11 @@ class Unit(Cell):
         l = self.getMovementRange(grid)
         
         for cell in l:
-            print(formatOutputCoords(cell))
+            print(formatOutputCoords(cell), end=", ")
         
         while True:
             # prompt user to select a Cell from the list
-            take = input("Select a Cell: ")
+            take = input("\n\nSelect a Cell: ")
             
             t = formatInputCoords(take)
             print(t)
@@ -105,6 +130,7 @@ class Unit(Cell):
                 if(len(paths) == 0):
                     print("Path Error")
                 
+                # if multiple paths are presented, then the user must be prompted to choose which specific path they would like to take
                 elif(len(paths) > 1):
                     print("Choose the index of the path " + self.properties["cell-name"] + " should follow: ")
                     paths.sort(key = len)
@@ -149,6 +175,13 @@ class Unit(Cell):
     
     def actionCommand(self, grid):
         print("Act " + self.properties["cell-name"])
+        
+        l = self.getNeighbors(grid)
+        
+        for i in l:
+            if(i.occupiedBy != None):
+                d = damageFormula(self, "ba", i.occupiedBy)
+        
         self.hasActed = True
         
     def waitCommand(self, grid):
@@ -188,7 +221,8 @@ class Unit(Cell):
             
             for cell in n:
                 stack.append( (curMov - 1, cell.position) )
-                
+            
+        possible.remove(self.position)
         return possible # This is a list of valid positions that can be moved to -- does not account for paths to that position
     
     """

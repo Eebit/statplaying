@@ -1,4 +1,5 @@
 import json
+import random
 
 def loadJson(filepath):
     try:
@@ -94,3 +95,64 @@ def read_grid(filepath):
     except IOError as e:
         print("Cannot open " + filepath)
         return []
+        
+def damageFormula(source, action, target):
+    if(action == "ba"):
+        print("basic attack")
+        basicAttackType = source.properties["profession"]["ba-type"]
+        
+        if(basicAttackType == 0):
+            print("physical")
+            attackingStat = source.stats["attack"]
+            defendingStat = target.stats["defense"]
+            
+        elif(basicAttackType == 1):
+            print("magical")
+            attackingStat = source.stats["intelligence"]
+            defendingStat = target.stats["spirit"]
+            
+        else:
+            print("undefined, default to physical")
+            attackingStat = source.stats["attack"]
+            defendingStat = target.stats["defense"]
+        
+        accuracyChance = random.randint(0, 100)
+        #if(accuracyChance > source.stats["accuracy"]):
+        if(accuracyChance > 100):
+            print("accuracy miss")
+            return -1
+        
+        criticalChance = random.randint(0, 100)
+        if(criticalChance <= source.stats["critical"]):
+            print("critical hit")
+            criticalHit = True
+            baseModifier = 1.5
+        else:
+            criticalHit = False
+            baseModifier = 1.0
+        
+        evade = random.randint(0, 100)
+        if(evade <= target.stats["evasion"]):
+            print("evasion dodge")
+            return -1
+        else:
+            # Base Damage = Attacking_Stat * Damage_Output
+            baseDamage = attackingStat * 1.0
+            
+            # Protection Value is the value of defense plus any other mitigations that aren't necessarily modifiers
+            protectionValue = defendingStat
+            
+            totalModifier = 1.0
+            
+            #Total Damage = ( ( Base_Damage * Base_Damage_Modifiers ) - Protection Value ) * Total Damage Modifiers
+            totalDamage = ( ( baseDamage * baseModifier ) - protectionValue ) * totalModifier
+            
+            if(totalDamage < 1):
+                print("scratch damage")
+                totalDamage = 1
+            else:
+                round(totalDamage, 0)
+                int(totalDamage)
+                
+            print("Total Damage: " + str(totalDamage))
+            return totalDamage

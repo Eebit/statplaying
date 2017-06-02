@@ -40,6 +40,30 @@ class Grid:
         
         return '\n'.join([''.join(x) for x in out])
     
+    def gridDisplay(self):
+        out = []
+        
+        for row in range(self.height):
+            out2 = []
+            for col in range(self.width):
+                if(self.grid[row][col].occupiedBy != None):
+                    out2.append("{" + str(self.grid[row][col].occupiedBy) + "} ")
+                else:
+                    # test if the Cell is an empty cell for printing the "basic" grid
+                    if(self.grid[row][col].properties["cell-id"] == " "):
+                        if(self.grid[row][col].properties["exists"] == True):
+                            out2.append("{" + str(self.grid[row][col]) + "} ")
+                        else:
+                            out2.append("    ")
+                    else:
+                        out2.append("{" + str(self.grid[row][col]) + "} ")
+                    
+            out2.append(chr(row + 65)) # chr(row+65) generates the ASCII char for the capital letter
+            out.append(out2)
+            
+        out.append(["-" + str(col + 1) + "- " for col in range(self.width)])
+        
+        return '\n'.join([''.join(x) for x in out])
     
     """
     Method that takes a Cell and adds it to the specified location 
