@@ -149,6 +149,7 @@ class GameState:
         
         while True:
             while True:
+                print(self.grid)
                 coord = input("Select coordinate: ")
                 pos = formatInputCoords(coord)
                 
@@ -182,11 +183,13 @@ class GameState:
                     if i == "c":
                         break
                     
-                    # TODO: Need to handle situations where the unit has Acted or Moved, since
-                    # currently, only the instructions are hidden. If the user types M after hasMoved is
-                    # set, then they can still move again.
                     try:
-                        commandInput[i]()
+                        if i == 'm' and u.hasMoved == True:
+                            print("failure")
+                        elif i == 'a' and u.hasActed == True:
+                            print("failure")
+                        else:
+                            commandInput[i](self.grid)
                     except KeyError:
                         print("failure")
     
