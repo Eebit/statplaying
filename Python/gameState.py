@@ -2,6 +2,7 @@ import json
 from grid import *
 from cell import *
 from util import *
+import game
 
 class GameState:
     def __init__(self, grid):
@@ -185,19 +186,14 @@ class GameState:
         else:
             print("\n" + self.grid.getCell(pos).occupiedBy.output() + "\n")
             return self.grid.getCell(pos).occupiedBy
-
-"""
-Will probably use this class to wrap up the interface so it's not all done in the GameState class
-"""
-class Game:
-    def __init__(self):
-        pass
         
 #######################################
 # TEST AREA
 #######################################
 
 if __name__ == "__main__":
+    g = game.Game()
+    
     newGrid = Grid(9, 9)
     data = loadJson('cell_bank.json')
     grid_data = read_grid("state_rec_1.txt")
