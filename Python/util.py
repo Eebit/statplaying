@@ -23,26 +23,29 @@ def loadUnitsUtil(numTeams):
         # load all JSON files in the current directory
         unitData = loadJson("units/" + file)
         
-        # handler for situations when multiple units inherit from the same JSON
-        if(type(unitData["cell-name"]) == list):
-            for i in range(len(unitData["cell-name"])):
-                copy = unitData.copy()
-                
-                copy["cell-name"] = unitData["cell-name"][i]
-                copy["cell-id"] = unitData["cell-id"][i]
-                
-                u = cell.Unit(copy)
+        try:
+            # handler for situations when multiple units inherit from the same JSON
+            if(type(unitData["cell-name"]) == list):
+                for i in range(len(unitData["cell-name"])):
+                    copy = unitData.copy()
+                    
+                    copy["cell-name"] = unitData["cell-name"][i]
+                    copy["cell-id"] = unitData["cell-id"][i]
+                    
+                    u = cell.Unit(copy)
+                    key = u.properties["cell-name"].casefold()
+            
+                    team = teamList[ unitData["alignment"] - 1 ]
+                    team[key] = u
+            # single unit generated from single JSON
+            else:
+                u = cell.Unit(unitData)
                 key = u.properties["cell-name"].casefold()
         
                 team = teamList[ unitData["alignment"] - 1 ]
                 team[key] = u
-        # single unit generated from single JSON
-        else:
-            u = cell.Unit(unitData)
-            key = u.properties["cell-name"].casefold()
-    
-            team = teamList[ unitData["alignment"] - 1 ]
-            team[key] = u
+        except KeyError:
+            print("Error loading JSON file: " + file + " . Potentially improper Unit format?")
 
     
     return teamList
