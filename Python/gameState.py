@@ -3,21 +3,6 @@ from grid import *
 from cell import *
 from util import *
 
-def loadUnits(filepath):
-    try:
-        with open(filepath) as data_file:
-            data = json.load(data_file)
-            
-        unitList = {}
-        for i in data["team"]: # :^)
-            u = Unit(i)
-            key = u.properties["cell-name"].casefold()
-            unitList[key] = u
-        
-        return unitList
-    except IOError as e:
-        print("Cannot open " + filepath)
-
 class GameState:
     def __init__(self, grid):
         self.grid = grid
