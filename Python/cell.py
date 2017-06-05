@@ -174,7 +174,7 @@ class Unit(Cell):
         print("Chosen Path: " + str(chosenPath))
         self.stepThroughMovement(chosenPath, grid)
         
-        self.hasMoved = True # mark the unit as having moved
+        #self.hasMoved = True # mark the unit as having moved
         #return the chosen path so that it can be appended to the game stack?
     
     def actionCommand(self, grid):
@@ -235,11 +235,11 @@ class Unit(Cell):
             curCell = grid.getCell( curPos )
             
             #If you have 0 moves or more and the current cell is occupiable, then store the current path
-            if( (curMov >= 0) and (curCell.properties["occupiable"] == True) and (curCell.position not in possible) ):
+            if( (curMov >= 0) and (curCell.properties["occupiable"] == True) and (curCell.occupiedBy == None) and (curCell.position not in possible) ):
                 possible.append( curCell.position )
             
             #If the current path ran out of moves or isn't passable, go to the next path
-            if( (curMov == 0) or ( (curCell.properties["passable"] == False) ) ): #TODO: Test for equal alignment here too
+            if( (curMov == 0) or ( (curCell.properties["passable"] == False) ) or ( (curCell.occupiedBy != None) and (curCell.occupiedBy.properties["alignment"] != 0) and (curCell.occupiedBy.properties["alignment"] != self.properties["alignment"]) ) ):
                 continue
             
             n = curCell.getNeighbors(grid)
@@ -247,7 +247,7 @@ class Unit(Cell):
             for cell in n:
                 stack.append( (curMov - 1, cell.position) )
             
-        possible.remove(self.position)
+        #possible.remove(self.position)
         return possible # This is a list of valid positions that can be moved to -- does not account for paths to that position
     
     """
@@ -267,12 +267,12 @@ class Unit(Cell):
             curCell = grid.getCell(curPos)
             
             #If you have 0 moves or more and the current cell is occupiable, then store the current path
-            if (curPos == target.position) and (curMov >= 0) and (curPath not in possiblePaths):
+            if (curPos == target.position) and (curMov >= 0) and (curCell.occupiedBy == None) and (curPath not in possiblePaths):
                 possiblePaths.append(curPath)
                 continue
             
             #If the current path ran out of moves or isn't passable, go to the next path
-            if( (curMov == 0) or (curCell.properties["passable"] == False) or (len(curPath) > mov + 1 ) ): #TODO: Test for equal alignment here too
+            if( (curMov == 0) or (curCell.properties["passable"] == False) or (len(curPath) > mov + 1 ) or ( (curCell.occupiedBy != None) and (curCell.occupiedBy.properties["alignment"] != 0) and (curCell.occupiedBy.properties["alignment"] != self.properties["alignment"]) )):
                 continue
                 
             n = curCell.getNeighbors(grid)
@@ -298,7 +298,12 @@ class Unit(Cell):
             cell = grid.getCell(pos)
             
             # Set ourselves to occupy this Cell, if only temporarily
-            cell.occupiedBy = self
+            if cell.occupiedBy != None:
+                temp = cell.occupiedBy
+                cell.occupiedBy = self
+            else:
+                cell.occupiedBy = self
+                temp = None
             
             # TODO: test statements go in here (traps, passable effects, etc)
             
@@ -306,7 +311,10 @@ class Unit(Cell):
             # then remove ourself from occupying it
             if(pos != path[-1]):
                 print("proceeding movement")
-                cell.occupiedBy = None
+                if(temp != None):
+                    cell.occupiedBy = temp
+                else:
+                    cell.occupiedBy = None
             else:
                 print("done")
         

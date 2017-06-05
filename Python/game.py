@@ -137,7 +137,7 @@ class Game:
             
             u = self.state.select(pos)
             
-            if (type(u) == Unit) and (u.properties["alignment"] == self.phase):
+            if (type(u) == cell.Unit) and (u.properties["alignment"] == self.state.phase):
                 commandInput = {
                 'm': u.movementCommand,
                 'a': u.actionCommand,
@@ -164,7 +164,7 @@ class Game:
                         elif i == 'a' and u.hasActed == True:
                             print("failure")
                         else:
-                            commandInput[i](self.grid)
+                            commandInput[i](self.state.grid)
                     except KeyError:
                         print("failure")
                     
