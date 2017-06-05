@@ -11,7 +11,7 @@ def loadJson(filepath):
     except IOError:
         print("Cannot open " + filepath)
         
-def loadUnitsUtil(numTeams):
+def loadUnits(numTeams):
     unitFiles = os.listdir("units")
     teamList = [] # a list of dictionaries that contain the units
     
@@ -59,19 +59,34 @@ For example, given I5, the method will return (8, 4)
 def formatInputCoords(input):
     inputAsList = list(input)
     
-    if(len(inputAsList) != 2):
+    if( (len(inputAsList) < 2) or (len(inputAsList) > 3) ):
         print("try again")
-    elif(not inputAsList[0].isalpha()):
-        print("not char")
-    elif(not inputAsList[1].isdigit()):
-        print("not num")
     else:
-        if(inputAsList[0].isupper()):
-            row = ord(inputAsList[0]) - 65 # convert from ASCII capital letter char to int
+        if(len(inputAsList) == 2):
+            if(not inputAsList[0].isalpha()):
+                print("not char")
+            elif(not inputAsList[1].isdigit()):
+                print("not num")
+            else:
+                if(inputAsList[0].isupper()):
+                    row = ord(inputAsList[0]) - 65 # convert from ASCII capital letter char to int
+                else:
+                    row = ord(inputAsList[0]) - 97 # convert from ASCII lowercase letter char to int
+                            
+                col = int(inputAsList[1]) - 1 # subtract 1 to account for 0 being the first column internally, but 1 externally
         else:
-            row = ord(inputAsList[0]) - 97 # convert from ASCII lowercase letter char to int
-                    
-        col = int(inputAsList[1]) - 1 # subtract 1 to account for 0 being the first column internally, but 1 externally
+            if(not inputAsList[0].isalpha()):
+                print("not char")
+            elif( (not inputAsList[1].isdigit()) or (not inputAsList[2].isdigit()) ):
+                print("not num")
+            else:
+                if(inputAsList[0].isupper()):
+                    row = ord(inputAsList[0]) - 65 # convert from ASCII capital letter char to int
+                else:
+                    row = ord(inputAsList[0]) - 97 # convert from ASCII lowercase letter char to int
+                
+                colStr = (inputAsList[1] + inputAsList[2])
+                col = int(colStr) - 1 # subtract 1 to account for 0 being the first column internally, but 1 externally
         
         return (row, col)
 
