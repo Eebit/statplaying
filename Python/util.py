@@ -1,6 +1,8 @@
 import json
 import random
 import os
+import copy
+
 import cell
 
 def loadJson(filepath):
@@ -27,12 +29,12 @@ def loadUnits(numTeams):
             # handler for situations when multiple units inherit from the same JSON
             if(type(unitData["cell-name"]) == list):
                 for i in range(len(unitData["cell-name"])):
-                    copy = unitData.copy()
+                    copiedData = copy.deepcopy(unitData)
                     
-                    copy["cell-name"] = unitData["cell-name"][i]
-                    copy["cell-id"] = unitData["cell-id"][i]
+                    copiedData["cell-name"] = unitData["cell-name"][i]
+                    copiedData["cell-id"] = unitData["cell-id"][i]
                     
-                    u = cell.Unit(copy)
+                    u = cell.Unit(copiedData)
                     key = u.properties["cell-name"].casefold()
             
                     team = teamList[ unitData["alignment"] - 1 ]
@@ -61,12 +63,15 @@ def formatInputCoords(input):
     
     if( (len(inputAsList) < 2) or (len(inputAsList) > 3) ):
         print("try again")
+        return None
     else:
         if(len(inputAsList) == 2):
             if(not inputAsList[0].isalpha()):
                 print("not char")
+                return None
             elif(not inputAsList[1].isdigit()):
                 print("not num")
+                return None
             else:
                 if(inputAsList[0].isupper()):
                     row = ord(inputAsList[0]) - 65 # convert from ASCII capital letter char to int
@@ -77,8 +82,10 @@ def formatInputCoords(input):
         else:
             if(not inputAsList[0].isalpha()):
                 print("not char")
+                return None
             elif( (not inputAsList[1].isdigit()) or (not inputAsList[2].isdigit()) ):
                 print("not num")
+                return None
             else:
                 if(inputAsList[0].isupper()):
                     row = ord(inputAsList[0]) - 65 # convert from ASCII capital letter char to int

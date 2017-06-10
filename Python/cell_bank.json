@@ -226,7 +226,6 @@
             "is-occupied": false,
             
             "has-stats": false
-        },
-        null
+        }
     ]
 }

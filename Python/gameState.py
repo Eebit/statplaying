@@ -78,6 +78,9 @@ class GameState:
     def select(self, pos):
         if self.grid.getCell(pos).occupiedBy == None:
             print("\n" + self.grid.getCell(pos).output() + "\n")
+            
+            print("\nAdjacent Cells: " + str(self.grid.getCell(pos).getNeighbors(self.grid)) + "\nDiagonal Cells: " + str(self.grid.getCell(pos).getDiagonals(self.grid)) + "\nSurrounding Cells: " + str(self.grid.getCell(pos).getSurrounding(self.grid)) + "\n")
+            
             return self.grid.getCell(pos)
         else:
             print("\n" + self.grid.getCell(pos).occupiedBy.output() + "\n")

@@ -47,15 +47,7 @@
             "flavor": "Hastily-constructed Drive Blade model, made of scraps and other spare parts. Definitely not the best of Yume's Magitech exploits.", 
             "range": 1,
             "stats": {
-                "health": 0,
-                "mana": 0,
-                "attack": 1,
-                "defense": 0,
-                "intelligence": 0,
-                "spirit": 0,
-                "critical": 0,
-                "evasion": 0,
-                "movement": 0
+                "attack": 1
             }
         },
         {
@@ -63,15 +55,7 @@
             "name": "Light Vest", 
             "flavor": "Though originally purposed as a engineering uniform, it also proves to be adequate for battle.", 
             "stats": {
-                "health": 0,
-                "mana": 0,
-                "attack": 0,
-                "defense": 1,
-                "intelligence": 0,
-                "spirit": 0,
-                "critical": 0,
-                "evasion": 0,
-                "movement": 0
+                "defense": 1
             }
         },
         {
@@ -79,15 +63,7 @@
             "name": "Old Core", 
             "flavor": "Non-functional core of a high-quality Drive Blade. It has been damaged beyond repair, but seems to be important to Yume somehow.", 
             "stats": {
-                "health": 0,
-                "mana": 0,
-                "attack": 0,
-                "defense": 0,
-                "intelligence": 0,
-                "spirit": 1,
-                "critical": 0,
-                "evasion": 0,
-                "movement": 0
+                "spirit": 1
             }
         }
     ],
@@ -149,8 +125,7 @@
                     "range": 1,
                     "element": "Neutral",
                     "mp-cost": 6
-                },
-                null
+                }
             ]
         }
     ],

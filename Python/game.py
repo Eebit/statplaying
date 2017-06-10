@@ -60,6 +60,7 @@ class Game:
         
         while(True):
             self.gameplayPhase()
+            self.state.incrementPhase()
             print(self.state.grid.gridDisplay())
 
     def placementPhase(self):
@@ -117,7 +118,16 @@ class Game:
     def gameplayPhase(self):
         print("\n~ Team " + str(self.state.phase) + " Phase " + str(self.state.turn) + " ~\n")
         
-        while True:
+        print(self.state.teams[ self.state.phase - 1 ])
+        
+        toProcess = len(self.state.teams[ self.state.phase - 1 ])
+        
+        for key, unit in self.state.teams[ self.state.phase - 1 ].items():
+            print(unit)
+            print(unit.properties["cell-name"] + ": " + str(unit.hasActed) + ", " + str(unit.hasMoved) )
+        
+        while(toProcess > 0):
+            print(toProcess)
             
             # Loop for getting coordinate selection
             # TODO: Add a selection method by unit name (or identifier?) as well as by coordinate
@@ -168,8 +178,10 @@ class Game:
                     except KeyError:
                         print("failure")
                     
+                    # TODO: Implement support for Free Commands
                     if(u.hasActed == True and u.hasMoved == True):
                         u.processed = True
+                        toProcess = toProcess - 1
 
         
 #######################################

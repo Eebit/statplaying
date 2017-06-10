@@ -78,7 +78,30 @@ class Cell:
             neighbors.append(grid.getCell( (self.position[0], self.position[1] + 1) ))
         
         return neighbors
+    
+    def getDiagonals(self, grid):
+        diagonals = []
         
+        # top left
+        if((self.position[0] > 0) and (self.position[1] > 0)):
+            diagonals.append(grid.getCell( (self.position[0] - 1, self.position[1] - 1) ))
+        
+        # bottom left
+        if((self.position[0] > 0) and (self.position[1] < grid.width - 1)):
+            diagonals.append(grid.getCell( (self.position[0] - 1, self.position[1] + 1) ))
+        
+        # top right
+        if((self.position[1] < grid.width - 1) and (self.position[1] > 0)):
+            diagonals.append(grid.getCell( (self.position[0] + 1, self.position[1] - 1) ))
+            
+        # bottom right
+        if((self.position[1] < grid.width - 1) and (self.position[1] < grid.width - 1)):
+            diagonals.append(grid.getCell( (self.position[0] + 1, self.position[1] + 1) ))
+        
+        return diagonals
+    
+    def getSurrounding(self, grid):
+        return self.getNeighbors(grid) + self.getDiagonals(grid)
 
 class Unit(Cell):
     def __init__(self, cell_dict):
@@ -86,6 +109,7 @@ class Unit(Cell):
         self.position = None
         
         self.loadBaseStats()
+        self.loadEquipment()
         
         try:
             self.basicAttackRange = self.properties["equipment"][0]["range"]
@@ -99,6 +123,18 @@ class Unit(Cell):
         
     def loadBaseStats(self):
         self.stats = self.properties["base-stats"]
+    
+    def loadEquipment(self):
+        self.equipment = self.properties["equipment"]
+        
+        for equip in self.equipment:
+            for stat in equip["stats"]:
+                #print(self.stats[stat])
+                print(stat)
+                print(equip["stats"][stat])
+                self.stats[stat] = self.stats[stat] + equip["stats"][stat]
+                #print(stat, equip["stats"][stat])
+                
     
     def output(self):
         outStr = str(self.properties["cell-name"]) + " (" + str(self.properties["profession"]["name"]) + ")" +"\nHP:\t\t" + str(self.stats["current-health"]) + "/" + str(self.stats["max-health"]) + "\nMP:\t\t" + str(self.stats["current-mana"]) + "/" + str(self.stats["max-mana"]) + "\nAtk:\t\t" + str(self.stats["attack"]) +"\nDef:\t\t" + str(self.stats["defense"]) + "\nInt:\t\t" + str(self.stats["intelligence"]) + "\nSpr:\t\t" + str(self.stats["spirit"]) + "\nCritical:\t" + str(self.stats["critical"]) + "%" + "\nEvasion:\t" + str(self.stats["evasion"]) + "%" + "\nMovement:\t" + str(self.stats["movement"]) + " Cells" + "\nX-Gauge:\t" + str(self.stats["x-gauge"]) + "/30"
@@ -199,7 +235,9 @@ class Unit(Cell):
             commandInput['x'] = ""
         print("\t\tCANCEL\t\t\t(C)")
         
-        """
+        print("\n")
+        self.aSkillList(0)
+        
         
         
         l = self.getNeighbors(grid)
@@ -207,9 +245,8 @@ class Unit(Cell):
         for i in l:
             if(i.occupiedBy != None):
                 d = damageFormula(self, "ba", i.occupiedBy)
-        """
         self.hasActed = True
-        
+    
     def waitCommand(self, grid):
         print("Wait " + self.properties["cell-name"])
         self.hasMoved = True
@@ -319,3 +356,13 @@ class Unit(Cell):
                 print("done")
         
         self.assignPosition(path[-1])
+        
+    def aSkillList(self, index):
+        commandInput = {
+        'c': "",
+        }
+        
+        for a in range(len(self.properties["a-ability"][index]["a-skills"])):
+            print("\t\t" + str(self.properties["a-ability"][index]["a-skills"][a]["skill-name"]).upper() + "\t\t(" + str(a + 1) + ")")
+            commandInput[str(a + 1)] = ""
+        

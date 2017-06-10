@@ -46,14 +46,7 @@
             "name": "Basic Plating", 
             "flavor": "The Security Drones in this area of the factory seem to have some slight renovations, consisting of simple metal guards on their body.", 
             "stats": {
-                "health": 0,
-                "mana": 0,
-                "attack": 0,
                 "defense": 1,
-                "intelligence": 0,
-                "spirit": 0,
-                "critical": 0,
-                "evasion": 0,
                 "movement": 0
             }
         },
@@ -62,14 +55,8 @@
             "name": "ProtoCore", 
             "flavor": "A proprietary piece of hardware of an unidentified company. Small sphere installed into mechanical objects in order to facilitate the conversion from Energy into Mana.", 
             "stats": {
-                "health": 0,
-                "mana": 5,
+                "max-mana": 5,
                 "attack": 0,
-                "defense": 0,
-                "intelligence": 0,
-                "spirit": 0,
-                "critical": 0,
-                "evasion": 0,
                 "movement": 0
             }
         }
@@ -85,8 +72,7 @@
                 },
                 { 
                     "refer2": "[b]+ BEAM: Electropulse:[/b] [i]The Security Drone's lens is equipped with overloaded electricity, giving it the capacity to stun its targets in their tracks.[/i] Single Hit. 80% ATK Damage. Chance of Spasm (Mod. 0). Cast Time: Instant. Accuracy: 100%. Variance: 0%. Range: 3 Cells. Element: Thunder. 6 MP. --- MODE: Supercharge: Increases Damage Ratio to 100%. Upgrades Spasm to Paralyze."
-                },
-                null
+                }
             ]
         }
     ],

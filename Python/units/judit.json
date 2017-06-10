@@ -47,15 +47,7 @@
             "flavor": "Training lances like these are commonplace for Queens/Kings in the making.", 
             "range": 2,
             "stats": {
-                "health": 0,
-                "mana": 0,
-                "attack": 1,
-                "defense": 0,
-                "intelligence": 0,
-                "spirit": 0,
-                "critical": 0,
-                "evasion": 0,
-                "movement": 0
+                "attack": 1
             }
         },
         {
@@ -63,15 +55,7 @@
             "name": "Pawn's Armor", 
             "flavor": "Cheap armor issued to every Pawn.", 
             "stats": {
-                "health": 0,
-                "mana": 0,
-                "attack": 0,
-                "defense": 1,
-                "intelligence": 0,
-                "spirit": 0,
-                "critical": 0,
-                "evasion": 0,
-                "movement": 0
+                "defense": 1
             }
         },
         {
@@ -79,15 +63,7 @@
             "name": "Odd Tiara", 
             "flavor": "This odd-looking tiara is standard uniform for female soldiers in Judit's homeland.", 
             "stats": {
-                "health": 0,
-                "mana": 5,
-                "attack": 0,
-                "defense": 0,
-                "intelligence": 0,
-                "spirit": 0,
-                "critical": 0,
-                "evasion": 0,
-                "movement": 0
+                "max-mana": 5
             }
         }
     ],
@@ -149,8 +125,7 @@
                     "range": 1,
                     "element": "Neutral",
                     "mp-cost": 6
-                },
-                null
+                }
             ]
         }
     ],
