@@ -107,6 +107,8 @@ class Unit(Cell):
     def __init__(self, cell_dict):
         self.properties = cell_dict
         self.position = None
+        self.basicAttackHitCount = 1
+        
         
         self.loadBaseStats()
         self.loadEquipment()
@@ -127,14 +129,28 @@ class Unit(Cell):
     def loadEquipment(self):
         self.equipment = self.properties["equipment"]
         
+        baCount = 0
+        
+        # TODO: Load any "on hit" effects / non-statistical bonuses from equipment
         for equip in self.equipment:
+            # if the user has multiple weapons, they get that many Basic Attacks
+            if equip["type"] == "weapon":
+                baCount = baCount + 1
+            
+            # load up all stat bonuses from each piece of equipment
             for stat in equip["stats"]:
-                #print(self.stats[stat])
-                print(stat)
-                print(equip["stats"][stat])
                 self.stats[stat] = self.stats[stat] + equip["stats"][stat]
-                #print(stat, equip["stats"][stat])
-                
+        
+        # reload the current health and mana stats just in case they were changed
+        # NOTE: This /could/ cause a bug. Keep an eye on whether changing current to reference max causes a problem where both change if one is changed.
+        self.stats["current-health"] = self.stats["max-health"]
+        self.stats["current-mana"] = self.stats["max-mana"]
+        
+        # update basic attack count
+        if baCount < 1:
+            self.basicAttackHitCount = 1
+        else:
+            self.basicAttackHitCount = baCount
     
     def output(self):
         outStr = str(self.properties["cell-name"]) + " (" + str(self.properties["profession"]["name"]) + ")" +"\nHP:\t\t" + str(self.stats["current-health"]) + "/" + str(self.stats["max-health"]) + "\nMP:\t\t" + str(self.stats["current-mana"]) + "/" + str(self.stats["max-mana"]) + "\nAtk:\t\t" + str(self.stats["attack"]) +"\nDef:\t\t" + str(self.stats["defense"]) + "\nInt:\t\t" + str(self.stats["intelligence"]) + "\nSpr:\t\t" + str(self.stats["spirit"]) + "\nCritical:\t" + str(self.stats["critical"]) + "%" + "\nEvasion:\t" + str(self.stats["evasion"]) + "%" + "\nMovement:\t" + str(self.stats["movement"]) + " Cells" + "\nX-Gauge:\t" + str(self.stats["x-gauge"]) + "/30"

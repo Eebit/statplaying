@@ -2,19 +2,63 @@
 	"askillformat": {
 		"skill-name": "The name of the A-Skill.",
 		"description": "The flavour text of the A-Skill, if applicable.",
-		"hit-count": "The number of hits that this A-Skill causes.",
-		"damage": "The Damage (or Healing) multiplier. Negative for Healing, positive for Damage.",
-		"damage-stat": "Atk / Def / Int / Spr / HP / MP",
-		"damage-type": "Normal, Piercing, Destruct, etc.",
-		"status-effect": "If a Status Effect is applied to the target during this A-Skill, that Status Effect is here.",
-		"modifier": "The Chance Modifier for the Status Effect roll. Mod. 0 by default.",
-		"cast-time": "The number of Turns required for Cast Time, if applicable.",
-		"cast-type": "The type of Cast Time (i.e. Charge, Normal, etc).",
-		"accuracy": "The Accuracy.",
-		"variance": "The Variance roll, if applicable.",
-		"range": "The integer value of the number of Cells this A-Skill has as a range.",
-		"element": "The Element effect of the A-Skill",
-		"chain": "",
-		"mp-cost": "How much MP the A-Skill costs to use."
+        
+        "order": ["Write the keys", "in the order", "that they should", "be executed."],
+        
+        "range": {
+        },
+        
+        "damage": {
+            "hit-count": "The number of hits that this A-Skill causes.",
+            "max-hp": "Does it scale with a stat or Max HP?",
+            "statistic": "0 for Physical, 1 for Magical. If Max HP: 0 for HP, 1 for MP.",
+            "classification": "0 for Normal, 1 for Piercing, 2 for Destruct. A list for multiple.",
+            "scaling": "The multiplier of how much the damage scales on the stat.",
+            "accuracy": "The Accuracy of the Skill (out of 100). -1 for Sure Hit.",
+            "variance": ["The Variance range of the Skill", "as a list for the Variance Range"],
+            "persist": "If the Damage Persists, put the integer value for the number of Turns. Else, put 0.",
+            "target": "The Range of the Skill. 0 for Self."
+        },
+        
+        "healing": {
+            "drain": "<TBA>",
+            "heals-hp": "What the Healing component heals. True for HP, False for MP.",
+            "statistic": "Scales off of... Max HP, Max MP, Atk, Def, Int, Spr",
+            "scaling": "The multiplier of how much the damage scales on the stat.",
+            "target": "0 for Self, 1 for Target"
+        },
+        
+        "status-effect": {
+            "status": "The Status Effect that the target will be given.",
+            "duration": "How long the Status Effect will last.",
+            "modifier": "The Chance Modifier for the Status Effect roll. Assigned Mod. 0 by default.",
+            "target": "Who this Status will affect. 0 for Self, 1 for Target. Default 1."
+        },
+        
+        "stat-change": {
+            "statistic": "HP, MP, Atk, Def, Int, Spr, Eva, Crit, Mov",
+            "percent": "True if stat change scales off of a percentile value, False if it scales off of an integer value.",
+            "scaling": "How much the stat will be increased by (contingent on the above value being True or False)",
+            "duration": "How long the Stat Change will last."
+        },
+        
+        "mobility": {
+            "range": "Permissable Range for Target to be moved to",
+            "movethrough": "Does the Skill allow the Target to go through other Cells (such as Walls)? True if it can, False if not."
+        },
+        
+        "cell-creation": {
+            "is-unit": "If the Cell is a Unit, put True. If the Cell is an Object, put False.",
+            "duration": "How long the Cell lasts.",
+            "cell-effects": "<TBA>"
+        },
+        
+        "knockback": "How many Cells this Skill knocks the Target back. Default 0.",
+        "element": "The Elemental value of the Skill. Neutral if blank. Other values: Fire, Earth, Lightning, Wind, Nature, Ice, Water, Aether, Light, Darkness",
+        "mp-cost": "Integer value for how much MP the A-Skill costs.",
+        
+        "augment": {
+            "put": "An entirely new A-Skill format here if there is a condition that may augment the user's A-Skill at some point"
+        }
 	}
 }
