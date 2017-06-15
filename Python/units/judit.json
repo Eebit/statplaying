@@ -74,57 +74,70 @@
             "a-skills": [
                 {
                     "default": " + Bishop's Teachings: The user is reminded of their teachings by the academy bishop and calms down. 80% DEF healing. Dispels mental ailments. Range: Self. 8 MP.",
-                    "skill-name": "Sonic Drive",
-                    "description": "Astonishingly quick, powerful blow with the user's Drive Blade, generating moderate heat buildup. D-Skill.",
-                    "hit-count": 1,
-                    "damage": 1.6,
-                    "damage-stat": "Atk",
-                    "damage-type": "Normal",
-                    "status-effect": "N/A",
-                    "modifier": "N/A",
-                    "cast-time": 0,
-                    "cast-type": "Normal",
-                    "accuracy": 100,
-                    "variance": 0,
-                    "range": 1,
+                    "skill-name": "Bishop's Teachings",
+                    "description": "The user is reminded of their teachings by the academy bishop and calms down.",
+                    
+                    "order": ["Write the keys", "in the order", "that they should", "be executed."],
+                    
+                    "range": {
+                        "cells": 0
+                    },
+                    
+                    "healing": {
+                        "heals-hp": true,
+                        "statistic": "Def",
+                        "scaling": 0.8,
+                        "target": 0
+                    },
+                    
+                    "status-effect": {
+                        "adds": false,
+                        "status": "The Status Effect that the target will be given.",
+                        "duration": "How long the Status Effect will last.",
+                        "modifier": "The Chance Modifier for the Status Effect roll. Assigned Mod. 0 by default.",
+                        "target": 0
+                    },
+                    
                     "element": "Neutral",
-                    "chain": "N/A",
-                    "mp-cost": 6
+                    "mp-cost": 8
                 },
+                
                 {
                     "default": " + Pawn Strike: User embodies the strategical strength of a Pawn and strikes the opponent with force. If paired with Pawn Influence, the force of this attack is increased. 140% ATK damage, 120% otherwise.  Range: Adjacent cell. Chance of Immobilization (Mod +1). Use time: Instant. Hit rate: 100%. Variance: 0. 10 MP.",
-                    "skill-name": "Coolant Flow",
-                    "description": "Courses ambient Mana through one's Drive Blade like a cooling agent, also allowing the user to slightly replenish her Mana Pool.",
-                    "hit-count": 0,
-                    "damage": 0,
-                    "status-effect": "If a Status Effect is applied to the target during this A-Skill, that Status Effect is here.",
-                    "modifier": "The Chance Modifier for the Status Effect roll. Mod. 0 by default.",
-                    "cast-time": 0,
-                    "cast-type": "Normal",
-                    "accuracy": 100,
-                    "variance": 0,
-                    "range": 0,
+                    "skill-name": "Pawn Strike",
+                    "description": "User embodies the strategical strength of a Pawn and strikes the opponent with force. If paired with Pawn Influence, the force of this attack is increased.",
+                    
+                    "order": ["Write the keys", "in the order", "that they should", "be executed."],
+                    
+                    "range": {
+                        "cells": 1
+                    },
+                    
+                    "damage": {
+                        "hit-count": 1,
+                        "max-hp": false,
+                        "statistic": 0,
+                        "classification": 0,
+                        "scaling": 1.2,
+                        "accuracy": 100,
+                        "variance": [0, 0],
+                        "persist": 0,
+                        "target": 1
+                    },
+                    
+                    "status-effect": {
+                        "status": "Immobilize",
+                        "duration": 3,
+                        "modifier": 1,
+                        "target": 1
+                    },
+                    
                     "element": "Neutral",
-                    "chain": "Cycle Mana",
-                    "mp-cost": 2
-                },
-                {
-                    "default": " + Castling: An evasive maneuver that can only be used on Allies on the same row or column. The User moves up to the Target and swaps Cells with them. Only consumes Move command if used before moving. Can only be used if the path is unobstructed. 8 MP.",
-                    "skill-name": "Syphon Drive",
-                    "description": "Destabilizes the target's Mana Pool with a single slash, causing it to continually leak out and into the user's Drive Blade. D-Skill.",
-                    "hit-count": 1,
-                    "damage": 0.3,
-                    "damage-stat": "Atk",
-                    "damage-type": "Piercing",
-                    "status-effect": "If a Status Effect is applied to the target during this A-Skill, that Status Effect is here.",
-                    "modifier": "The Chance Modifier for the Status Effect roll. Mod. 0 by default.",
-                    "cast-time": 0,
-                    "cast-type": "Normal",
-                    "accuracy": 100,
-                    "variance": 0,
-                    "range": 1,
-                    "element": "Neutral",
-                    "mp-cost": 6
+                    "mp-cost": 10,
+                    
+                    "augment": {
+                        "put": "If paired with Pawn Influence, the force of this attack is increased. 140% ATK damage."
+                    }
                 }
             ]
         }

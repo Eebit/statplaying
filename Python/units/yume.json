@@ -107,24 +107,6 @@
                     "element": "Neutral",
                     "chain": "Cycle Mana",
                     "mp-cost": 2
-                },
-                {
-                    "default": "+ Syphon Drive: Destabilizes the target's Mana Pool with a single slash, causing it to continually leak out and into the user's Drive Blade. D-Skill. 30% Piercing Atk Damage. Absorbs 100% Total Damage as MP. Damage Persist for 3 Turns. On Stack: Refresh. Drive Cooldown: 2 Turns. Accuracy: 100%. Variance: 0%. Range: Adjacent Cell. Element: Neutral. 6 MP.",
-                    "skill-name": "Syphon Drive",
-                    "description": "Destabilizes the target's Mana Pool with a single slash, causing it to continually leak out and into the user's Drive Blade. D-Skill.",
-                    "hit-count": 1,
-                    "damage": 0.3,
-                    "damage-stat": "Atk",
-                    "damage-type": "Piercing",
-                    "status-effect": "If a Status Effect is applied to the target during this A-Skill, that Status Effect is here.",
-                    "modifier": "The Chance Modifier for the Status Effect roll. Mod. 0 by default.",
-                    "cast-time": 0,
-                    "cast-type": "Normal",
-                    "accuracy": 100,
-                    "variance": 0,
-                    "range": 1,
-                    "element": "Neutral",
-                    "mp-cost": 6
                 }
             ]
         }
