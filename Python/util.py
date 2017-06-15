@@ -172,7 +172,7 @@ def damageFormula(source, action, target):
         #if(accuracyChance > source.stats["accuracy"]):
         if(accuracyChance > 100):
             print("accuracy miss")
-            return -1
+            return None
         
         criticalChance = random.randint(0, 100)
         if(criticalChance <= source.stats["critical"]):
@@ -186,7 +186,7 @@ def damageFormula(source, action, target):
         evade = random.randint(0, 100)
         if(evade <= target.stats["evasion"]):
             print("evasion dodge")
-            return -1
+            return None
         else:
             # Base Damage = Attacking_Stat * Damage_Output
             baseDamage = attackingStat * 1.0

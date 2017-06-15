@@ -2,6 +2,7 @@ import cell
 import grid
 import gameState
 import util
+import menu
 
 """
 Will probably use this class to wrap up the interface so it's not all done in the GameState class
@@ -148,41 +149,117 @@ class Game:
             u = self.state.select(pos)
             
             if (type(u) == cell.Unit) and (u.properties["alignment"] == self.state.phase):
-                commandInput = {
-                'm': u.movementCommand,
-                'a': u.actionCommand,
-                'w': u.waitCommand,
-                }
-                
                 while not u.processed:
-                    if(u.hasMoved == False):
-                        print("\tMOVE\t\t(M)")
-                    if(u.hasActed == False):    
-                        print("\tACT\t\t(A)")
-                    print("\tWAIT\t\t(W)")
-                    print("\tCANCEL\t\t(C)")
-                
-                    i = input("Enter a Command: ")
-                    i = i.casefold()
+                    selection = menu.selectionMenu(u, self.state)
                     
-                    if i == "c":
+                    if(selection == 'm'):
+                        self.movementCommand(u, self.state.grid)
+                    elif(selection == 'a'):
+                        self.actionCommand(u, self.state.grid)
+                    elif(selection == 'w'):
+                        self.waitCommand(u)
+                    else:
                         break
-                    
-                    try:
-                        if i == 'm' and u.hasMoved == True:
-                            print("failure")
-                        elif i == 'a' and u.hasActed == True:
-                            print("failure")
-                        else:
-                            commandInput[i](self.state.grid)
-                    except KeyError:
-                        print("failure")
                     
                     # TODO: Implement support for Free Commands
                     if(u.hasActed == True and u.hasMoved == True):
                         u.processed = True
                         toProcess = toProcess - 1
-
+                    
+    
+    """
+    #
+    # SECTION FOR COMMANDS
+    #
+    """
+    
+    def movementCommand(self, unit, grid):
+        print("Move " + unit.properties["cell-name"])
+        
+        # output the list of Cells the unit can move to
+        l = unit.getMovementRange(grid)
+        
+        for cell in l:
+            print(util.formatOutputCoords(cell), end=", ")
+        
+        while True:
+            # prompt user to select a Cell from the list
+            take = input("\n\nSelect a Cell: ")
+            
+            t = util.formatInputCoords(take)
+            print(t)
+            
+            # if the user's chosen cell is in the list of cells, then
+            if t in l:
+                # get all valid paths to the Cell
+                paths = unit.getPaths(grid, grid.getCell(t))
+                
+                if(len(paths) == 0):
+                    print("Path Error")
+                
+                # if multiple paths are presented, then the user must be prompted to choose which specific path they would like to take
+                elif(len(paths) > 1):
+                    print("Choose the index of the path " + unit.properties["cell-name"] + " should follow: ")
+                    paths.sort(key = len)
+                    i = 1
+                    for path in paths:
+                        p = []
+                        for pos in path:
+                            pstr = util.formatOutputCoords(pos)
+                            p.append(pstr)
+                        print("[" + str(i) + "]: " + "->".join(p))
+                        i += 1
+                    
+                    while(True):
+                        index = input("> ")
+                        if(int(index) <= 0):
+                            print("Invalid Index")
+                        else:
+                            try:
+                                print(paths[int(index) - 1])
+                                chosenPath = paths[int(index) - 1]
+                                break
+                            except IndexError:
+                                print("Invalid Index")
+                    
+                    break
+                
+                else: # exactly one path
+                    for path in paths:
+                        p = []
+                        for pos in path:
+                            pstr = util.formatOutputCoords(pos)
+                            p.append(pstr)
+                        chosenPath = path
+                    print("->".join(p))
+                    break
+        
+        print("Chosen Path: " + str(chosenPath))
+        unit.stepThroughMovement(chosenPath, grid)
+        
+        #unit.hasMoved = True # mark the unit as having moved
+        #return the chosen path so that it can be appended to the game stack?
+    
+    def actionCommand(self, unit, grid):
+        print("Act " + unit.properties["cell-name"])
+        
+        menu.actionMenu(unit)
+        
+        """
+        l = unit.getNeighbors(grid)
+        
+        for i in l:
+            if(i.occupiedBy != None):
+                d = damageFormula(unit, "ba", i.occupiedBy)
+        """
+        unit.hasActed = True
+    
+    def waitCommand(self, unit):
+        print("Wait " + unit.properties["cell-name"])
+        unit.hasMoved = True
+        unit.hasActed = True
+        
+        return ("w", unit.properties["cell-name"])
         
 #######################################
 # TEST AREA
