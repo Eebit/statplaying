@@ -184,7 +184,10 @@ class Game:
         
         while True:
             # prompt user to select a Cell from the list
-            take = input("\n\nSelect a Cell: ")
+            take = input("\n\nSelect a Cell, or type \"cancel\": ")
+            
+            if take == "cancel":
+                return None
             
             t = util.formatInputCoords(take)
             print(t)
@@ -243,7 +246,15 @@ class Game:
     def actionCommand(self, unit, grid):
         print("Act " + unit.properties["cell-name"])
         
-        menu.actionMenu(unit)
+        selection = menu.actionMenu(unit)
+        
+        if selection == None:
+            return None
+        else:
+            if selection == "ba":
+                print(unit.getActionRange(unit.basicAttackRange, self.state.grid))
+            
+            unit.hasActed = True
         
         """
         l = unit.getNeighbors(grid)
@@ -252,7 +263,6 @@ class Game:
             if(i.occupiedBy != None):
                 d = damageFormula(unit, "ba", i.occupiedBy)
         """
-        unit.hasActed = True
     
     def waitCommand(self, unit):
         print("Wait " + unit.properties["cell-name"])

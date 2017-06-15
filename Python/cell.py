@@ -261,3 +261,29 @@ class Unit(Cell):
                 print("done")
         
         self.assignPosition(path[-1])
+    
+    def getActionRange(self, range, grid):
+        cur = (range, self.position)
+        
+        stack = []
+        stack.append(cur)
+        possible = []
+        
+        while(stack != []):
+            curRange, curPos = stack.pop()
+            
+            curCell = grid.getCell( curPos )
+            
+            if( (curRange >= 0) and (curCell.properties["has-stats"] == True or curCell.occupiedBy != None) and (curCell.position not in possible) ):
+                possible.append( curCell.position )
+            
+            if( (curRange == 0) or ( (curCell.properties["block-ranged"] == True) ) ):
+                continue
+            
+            n = curCell.getNeighbors(grid)
+            
+            for cell in n:
+                stack.append( (curRange - 1, cell.position) )
+        
+        possible.remove(self.position)
+        return possible 
