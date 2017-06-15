@@ -67,11 +67,71 @@
             "name": "TYPE-0: DETAIN",
             
             "a-skills": [
-                { 
-                    "refer": "[b]+ FIST: Puncture Armour:[/b] [i]The Security Drone is equipped with the ability to analyze weak points in any target's armour, and it most certainly will use every opportunity possible to exploit a detected weakness.[/i] Single Hit. 110% ATK Damage. Lowers Target's DEF by 10% (Stackable to 50%). On Stack: Refresh Duration. Cast Time: Instant. Accuracy: 100%. Variance: 0%. Range: Adjacent Cell. Element: Neutral. 7 MP. --- MODE: Supercharge: Increases Damage Ratio to 120%. Increases DEF Reduction to 20%."
+                {
+                    "default": "[b]+ FIST: Puncture Armour:[/b] [i]The Security Drone is equipped with the ability to analyze weak points in any target's armour, and it most certainly will use every opportunity possible to exploit a detected weakness.[/i] Single Hit. 110% ATK Damage. Lowers Target's DEF by 10% (Stackable to 50%). On Stack: Refresh Duration. Cast Time: Instant. Accuracy: 100%. Variance: 0%. Range: Adjacent Cell. Element: Neutral. 7 MP. --- MODE: Supercharge: Increases Damage Ratio to 120%. Increases DEF Reduction to 20%.",
+                    
+                    "skill-name": "FIST: Puncture Armour",
+                    "description": "The Security Drone is equipped with the ability to analyze weak points in any target's armour, and it most certainly will use every opportunity possible to exploit a detected weakness.",
+                    
+                    "damage": {
+                        "hit-count": 1,
+                        "max-hp": false,
+                        "statistic": 0,
+                        "classification": 0,
+                        "scaling": 1.1,
+                        "accuracy": 100,
+                        "variance": [0, 0],
+                        "persist": 0,
+                        "target": 1
+                    },
+                    
+                    "stat-change": {
+                        "statistic": "Def",
+                        "percent": true,
+                        "scaling": -10,
+                        "duration": 3
+                    },
+                    
+                    "knockback": 0,
+                    "element": "Neutral",
+                    "mp-cost": 7,
+                    
+                    "augment": {
+                        "put": "An entirely new A-Skill format here if there is a condition that may augment the user's A-Skill at some point"
+                    }
                 },
-                { 
-                    "refer2": "[b]+ BEAM: Electropulse:[/b] [i]The Security Drone's lens is equipped with overloaded electricity, giving it the capacity to stun its targets in their tracks.[/i] Single Hit. 80% ATK Damage. Chance of Spasm (Mod. 0). Cast Time: Instant. Accuracy: 100%. Variance: 0%. Range: 3 Cells. Element: Thunder. 6 MP. --- MODE: Supercharge: Increases Damage Ratio to 100%. Upgrades Spasm to Paralyze."
+                {
+                    "default": "[b]+ BEAM: Electropulse:[/b] [i]The Security Drone's lens is equipped with overloaded electricity, giving it the capacity to stun its targets in their tracks.[/i] Single Hit. 80% ATK Damage. Chance of Spasm (Mod. 0). Cast Time: Instant. Accuracy: 100%. Variance: 0%. Range: 3 Cells. Element: Thunder. 6 MP. --- MODE: Supercharge: Increases Damage Ratio to 100%. Upgrades Spasm to Paralyze.",
+                    
+                    "skill-name": "BEAM: Electropulse",
+                    "description": "The Security Drone's lens is equipped with overloaded electricity, giving it the capacity to stun its targets in their tracks.",
+                    
+                    "damage": {
+                        "hit-count": 1,
+                        "max-hp": false,
+                        "statistic": 0,
+                        "classification": 0,
+                        "scaling": 0.8,
+                        "accuracy": 100,
+                        "variance": [0, 0],
+                        "persist": 0,
+                        "target": 3
+                    },
+                    
+                    "status-effect": {
+                        "status": "Spasm",
+                        "duration": 3,
+                        "modifier": 0,
+                        "target": 1
+                    },
+                    
+                    "knockback": 0,
+                    "element": "Lightning",
+                    "mp-cost": 6,
+                    
+                    "augment": {
+                        "put": "An entirely new A-Skill format here if there is a condition that may augment the user's A-Skill at some point"
+                    }
                 }
             ]
         }
