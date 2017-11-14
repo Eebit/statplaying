@@ -92,7 +92,7 @@ class Game:
             placed = False
             
             while (placed == False):
-                coord = input("Enter Cell position for " + unit.properties["cell-name"] + ": ")
+                coord = input("Enter Cell position for " + unit.name + ": ")
                 
                 pos = util.formatInputCoords(coord)
                 #print(pos)
@@ -125,7 +125,7 @@ class Game:
         
         for key, unit in self.state.teams[ self.state.phase - 1 ].items():
             print(unit)
-            print(unit.properties["cell-name"] + ": " + str(unit.hasActed) + ", " + str(unit.hasMoved) )
+            print(unit.name + ": " + str(unit.hasActed) + ", " + str(unit.hasMoved) )
         
         while(toProcess > 0):
             print(toProcess)
@@ -148,7 +148,7 @@ class Game:
             
             u = self.state.select(pos)
             
-            if (type(u) == cell.Unit) and (u.properties["alignment"] == self.state.phase):
+            if (type(u) == cell.Unit) and (u.alignment == self.state.phase):
                 while not u.processed:
                     selection = menu.selectionMenu(u, self.state)
                     
@@ -174,7 +174,7 @@ class Game:
     """
     
     def movementCommand(self, unit, grid):
-        print("Move " + unit.properties["cell-name"])
+        print("Move " + unit.name)
         
         # output the list of Cells the unit can move to
         l = unit.getMovementRange(grid)
@@ -244,7 +244,7 @@ class Game:
         #return the chosen path so that it can be appended to the game stack?
     
     def actionCommand(self, unit, grid):
-        print("Act " + unit.properties["cell-name"])
+        print("Act " + unit.name)
         
         selection = menu.actionMenu(unit)
         
@@ -265,11 +265,11 @@ class Game:
         """
     
     def waitCommand(self, unit):
-        print("Wait " + unit.properties["cell-name"])
+        print("Wait " + unit.name)
         unit.hasMoved = True
         unit.hasActed = True
         
-        return ("w", unit.properties["cell-name"])
+        return ("w", unit.id)
         
 #######################################
 # TEST AREA

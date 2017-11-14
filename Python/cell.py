@@ -1,8 +1,86 @@
 from util import *
 
+# This class will be used for the basic physical or magical stats
+class Statistic:
+    def __init__(self, type, value):
+        self.type = type # the "type" of the stat, e.g. Atk, Int, Def, Res
+        self.value = value # the base value of the stat
+    
+    def __repr__(self):
+        return str(self.type) + ":\t\t" + str(self.value)
+    
+    # Add an equipment bonus
+    def setEquipBonus(self, bonus):
+        pass
+    
+    # Add a bonus from a buff
+    def setBuffBonus(self, buff):
+        pass
+
+# This class will be used for HP and MP
+class FractionStatistic:
+    def __init__(self, type, numerator, denominator):
+        self.type = type
+        self.numerator = numerator
+        self.denominator = denominator
+    
+    def __repr__(self):
+        return str(self.type) + ": \t\t" + str(self.numerator) + "/" + str(self.denominator)
+    
+    # Add an equipment bonus
+    def setEquipBonus(self, bonus):
+        pass
+    
+    # Add a bonus from a buff
+    def setBuffBonus(self, buff):
+        pass
+    
+class PercentileStatistic:
+    def __init__(self, type, value):
+        self.type = type
+        self.value = value
+    
+    def __repr__(self):
+        return str(self.type) + ":\t" + str(self.value) + "%"
+    
+    def setEquipBonus(self, bonus):
+        pass
+    
+    def setBuffBonus(self, buff):
+        pass
+
+class MovementStatistic:
+    def __init__(self, moveCells):
+        self.type = "Movement"
+        self.value = moveCells
+    
+    def __repr__(self):
+        return str(self.type) + ":\t" + str(self.value) + " Cells"
+    
+    def setEquipBonus(self, bonus):
+        pass
+    
+    def setBuffBonus(self, buff):
+        pass
+
+class ExcessGauge:
+    def __init__(self, current):
+        self.type = "X-Gauge"
+        self.numerator = current
+        self.denominator = 30
+    
+    def __repr__(self):
+        return str(self.type) + ":\t" + str(self.numerator) + "/" + str(self.denominator)
+
+# ---------------------------------------------------
+#   Split
+# ---------------------------------------------------
+
 class Cell:
     def __init__(self, cell_dict):
         self.properties = cell_dict
+        self.id = cell_dict["cell-id"]
+        
         self.position = None
         self.occupiedBy = None
     
@@ -13,7 +91,7 @@ class Cell:
         self.position = pos
     
     def __str__(self):
-        return self.properties["cell-id"]
+        return self.id
         
     def __repr__(self):
         return str(self)
@@ -105,16 +183,43 @@ class Cell:
 
 class Unit(Cell):
     def __init__(self, cell_dict):
-        self.properties = cell_dict
+        #self.properties = cell_dict
+        self.id = cell_dict["cell-id"]
+        self.name = cell_dict["cell-name"]
+        self.profession = cell_dict["profession"]
+        self.alignment = cell_dict["alignment"]
+        
         self.position = None
         self.basicAttackHitCount = 1
         
-        self.status = []
-        self.loadBaseStats()
-        self.loadEquipment()
+        self.statusEffects = []
+        
+        # ========================
+        # LOADING STATS
+        # ========================
+        
+        self.health = FractionStatistic("HP", cell_dict["base-stats"]["current-health"],                                cell_dict["base-stats"]["max-health"])
+        self.mana = FractionStatistic("MP", cell_dict["base-stats"]["current-mana"],                              cell_dict["base-stats"]["max-mana"])
+        
+        self.attack = Statistic("Atk", cell_dict["base-stats"]["attack"])
+        self.defense = Statistic("Def", cell_dict["base-stats"]["defense"])
+        self.intelligence = Statistic("Int", cell_dict["base-stats"]["intelligence"])
+        self.resistance = Statistic("Res", cell_dict["base-stats"]["spirit"])
+        
+        self.critical = PercentileStatistic("Critical", cell_dict["base-stats"]["critical"])
+        self.evasion = PercentileStatistic("Evasion", cell_dict["base-stats"]["evasion"])
+        
+        self.movement = MovementStatistic(cell_dict["base-stats"]["movement"])
+        
+        self.excessGauge = ExcessGauge(0)
+        
+        """  !TODO: Reimplement loadEquipment()  """
+        #self.loadEquipment(cell_dict)
+        
+        # ========================
         
         try:
-            self.basicAttackRange = self.properties["equipment"][0]["range"]
+            self.basicAttackRange = cell_dict["equipment"][0]["range"]
         except KeyError:
             self.basicAttackRange = 1
         
@@ -122,12 +227,10 @@ class Unit(Cell):
         self.hasActed = False
         
         self.processed = False # processed flag is used for when a unit has been fully processed for the turn, either automatically (having taken both act and move commands) or manually (by waiting)
-        
-    def loadBaseStats(self):
-        self.stats = self.properties["base-stats"]
     
-    def loadEquipment(self):
-        self.equipment = self.properties["equipment"]
+    def loadEquipment(self, cell_dict):
+        self.equipment = cell_dict["equipment"]
+        # ! TODO: Remove "equipment" dictionary and make them objects
         
         baCount = 0
         
@@ -153,7 +256,7 @@ class Unit(Cell):
             self.basicAttackHitCount = baCount
     
     def output(self):
-        outStr = str(self.properties["cell-name"]) + " (" + str(self.properties["profession"]["name"]) + ")" +"\nHP:\t\t" + str(self.stats["current-health"]) + "/" + str(self.stats["max-health"]) + "\nMP:\t\t" + str(self.stats["current-mana"]) + "/" + str(self.stats["max-mana"]) + "\nAtk:\t\t" + str(self.stats["attack"]) +"\nDef:\t\t" + str(self.stats["defense"]) + "\nInt:\t\t" + str(self.stats["intelligence"]) + "\nSpr:\t\t" + str(self.stats["spirit"]) + "\nCritical:\t" + str(self.stats["critical"]) + "%" + "\nEvasion:\t" + str(self.stats["evasion"]) + "%" + "\nMovement:\t" + str(self.stats["movement"]) + " Cells" + "\nX-Gauge:\t" + str(self.stats["x-gauge"]) + "/30"
+        outStr = str(self.name) + " (" + str(self.profession["name"]) + ")\n" + str(self.health) + "\n" + str(self.mana) + "\n" + str(self.attack) + "\n" + str(self.defense) + "\n" + str(self.intelligence) + "\n" + str(self.resistance) + "\n" + str(self.critical) + "\n" + str(self.evasion) + "\n" + str(self.movement) + "\n" + str(self.excessGauge)
         return outStr
     
     
@@ -164,7 +267,7 @@ class Unit(Cell):
     """
     
     def getMovementRange(self, grid):
-        mov = self.stats["movement"]
+        mov = self.movement.value
         cur = (mov, self.position)
         
         stack = []
@@ -196,7 +299,7 @@ class Unit(Cell):
     TODO: I'm sure this method could use some heavy optimization... but hey, it's in place
     """
     def getPaths(self, grid, target):
-        mov = self.stats["movement"]
+        mov = self.movement.value
         cur = (mov, [self.position])
 
         paths = []

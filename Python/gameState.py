@@ -66,7 +66,7 @@ class GameState:
         # - Can the Cell be occupied? TODO: Maybe check instead if it IS occupied?
         # - Is this Cell a Starting Zone?
         # - Does the unit's team alignment match the Cell's alignment?
-        if (self.turn == 0) and (self.grid.getCell(pos).properties["occupiable"] == True) and (self.grid.getCell(pos).properties["cell-name"] == "Starting Zone") and (self.grid.getCell(pos).properties["alignment"] == unit.properties["alignment"]):
+        if (self.turn == 0) and (self.grid.getCell(pos).properties["occupiable"] == True) and (self.grid.getCell(pos).properties["cell-name"] == "Starting Zone") and (self.grid.getCell(pos).properties["alignment"] == unit.alignment):
             self.grid.addEmptyCell(pos)
             self.grid.grid[ pos[0] ][ pos[1] ].occupiedBy = unit
             unit.assignPosition(pos)

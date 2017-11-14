@@ -29,7 +29,7 @@ class Grid:
                     out2.append(str(self.grid[row][col].occupiedBy))
                 else:
                     # test if the Cell is an empty cell for printing the "basic" grid
-                    if(self.grid[row][col].properties["cell-id"] == " "):
+                    if(self.grid[row][col].id == " "):
                         if(self.grid[row][col].properties["exists"] == True):
                             out2.append("-") # prints a dash for empty cell rather than a space (for visibility)
                         else:
@@ -50,7 +50,7 @@ class Grid:
                     out2.append("{" + str(self.grid[row][col].occupiedBy) + "} ")
                 else:
                     # test if the Cell is an empty cell for printing the "basic" grid
-                    if(self.grid[row][col].properties["cell-id"] == " "):
+                    if(self.grid[row][col].id == " "):
                         if(self.grid[row][col].properties["exists"] == True):
                             out2.append("{" + str(self.grid[row][col]) + "} ")
                         else:

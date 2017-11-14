@@ -35,14 +35,14 @@ def loadUnits(numTeams):
                     copiedData["cell-id"] = unitData["cell-id"][i]
                     
                     u = cell.Unit(copiedData)
-                    key = u.properties["cell-name"].casefold()
+                    key = u.name.casefold()
             
                     team = teamList[ unitData["alignment"] - 1 ]
                     team[key] = u
             # single unit generated from single JSON
             else:
                 u = cell.Unit(unitData)
-                key = u.properties["cell-name"].casefold()
+                key = u.name.casefold()
         
                 team = teamList[ unitData["alignment"] - 1 ]
                 team[key] = u
