@@ -2,7 +2,6 @@ import json
 from grid import *
 from cell import *
 from util import *
-import game
 
 class GameState:
     def __init__(self, grid):
@@ -84,4 +83,7 @@ class GameState:
             return self.grid.getCell(pos)
         else:
             print("\n" + self.grid.getCell(pos).occupiedBy.output() + "\n")
+            print("\tIS OCCUPYING\n\n")
+            print(self.grid.getCell(pos).output() + "\n")
+            
             return self.grid.getCell(pos).occupiedBy  

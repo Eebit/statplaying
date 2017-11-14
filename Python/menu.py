@@ -1,6 +1,66 @@
 import game
 import cell
 
+class MenuItem:
+    def __init__(self, msg, key):
+        self.msg = msg
+        self.key = key
+
+    def selected(self):
+        pass
+
+class Menu:
+    def __init__(self):
+        self.commands = {}
+    
+    def addCommand(self, commandKey, commandValue):
+        self.commands[commandKey] = commandValue
+    
+    # Method that shows the available commands in the Menu
+    def display(self):
+        for k, v in self.commands.items():
+            print("[" + k + "] -\t" + v.msg)
+    
+    def select(self, key):
+        return value
+
+def placementMenu(state):
+    team = state.teams[ state.phase - 1 ]
+    
+    placeable = len(team.keys()) # The number of units on this team that can be placed (that is, all of them)
+
+    while(placeable > 0):
+        print("Available Units for Placement:")
+        for k in team.keys():
+            if team[k].position == None:
+                print(k)
+        
+        # Loop the input state until the user provides a valid key as an identifier
+        while True:
+            u = input("Select a Unit for Placement: ")
+            u = u.casefold()
+            
+            try:
+                unit = team[u]
+                break
+            except KeyError:
+                print("Invalid Unit Key")
+        
+        
+        placed = False
+        
+        while (placed == False):
+            coord = input("Enter Cell position for " + unit.properties["cell-name"] + ": ")
+            
+            pos = util.formatInputCoords(coord)
+            #print(pos)
+            
+            if(pos != None):
+                placed = self.state.placeUnit(unit, pos)
+            
+        placeable = placeable - 1 # decrement the number of placeable units
+    
+
 def selectionMenu(u, state):
     while True:
         if(u.hasMoved == False):

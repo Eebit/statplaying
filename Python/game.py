@@ -59,48 +59,15 @@ class Game:
             print(self.state.grid.gridDisplay())
             self.placementPhase()
         
-        while(True):
+        while(True): # TODO: Implement victory conditions
             self.gameplayPhase()
             self.state.incrementPhase()
             print(self.state.grid.gridDisplay())
 
     def placementPhase(self):
-        team = self.state.teams[ self.state.phase - 1 ]
-        
         print("\n~ Team " + str(self.state.phase) + " Placement Phase ~\n")
         
-        placeable = len(team.keys()) # The number of units on this team that can be placed (that is, all of them)
-        
-        while(placeable > 0):
-            print("Available Units for Placement:")
-            for k in team.keys():
-                if team[k].position == None:
-                    print(k)
-            
-            # Loop the input state until the user provides a valid key as an identifier
-            while True:
-                u = input("Select a Unit for Placement: ")
-                u = u.casefold()
-                
-                try:
-                    unit = team[u]
-                    break
-                except KeyError:
-                    print("Invalid Unit Key")
-            
-            
-            placed = False
-            
-            while (placed == False):
-                coord = input("Enter Cell position for " + unit.properties["cell-name"] + ": ")
-                
-                pos = util.formatInputCoords(coord)
-                #print(pos)
-                
-                if(pos != None):
-                    placed = self.state.placeUnit(unit, pos)
-                
-            placeable = placeable - 1 # decrement the number of placeable units
+        # placementPhase()
         
         # Update the Grid afterwards to remove all Starting Zone Cells for that team,
         # changing them to Empty Cells
